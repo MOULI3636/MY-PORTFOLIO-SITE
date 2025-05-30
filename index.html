@@ -638,90 +638,303 @@
             backdrop-filter: blur(5px);
         }
 
-        /* Responsive Design */
+        /* Responsive Design - Mobile First Approach */
+        @media (max-width: 1200px) {
+            :root {
+                --big-font: 2.2rem;
+                --h2-font: 2.5rem;
+            }
+            
+            .home {
+                grid-gap: 2em;
+            }
+            
+            .img-box {
+                width: 400px;
+                height: 400px;
+            }
+        }
+
         @media (max-width: 991px) {
             header {
                 padding: 15px 5%;
             }
+            
             section {
-                padding: 150px 5% 100px;
+                padding: 120px 5% 80px;
             }
+            
             .home {
                 grid-template-columns: 1fr;
+                height: auto;
                 text-align: center;
+                padding-top: 100px;
+                padding-bottom: 100px;
             }
+            
             .home-content {
                 max-width: 100%;
+                order: 2;
             }
+            
             .btn-box {
                 margin: 0 auto;
             }
+            
             .social-icons {
                 margin: 4rem auto 0;
             }
+            
+            .home-image {
+                order: 1;
+                margin-bottom: 50px;
+            }
+            
             .img-box {
-                margin-top: 50px;
-                width: 280px;
-                height: 280px;
+                width: 300px;
+                height: 300px;
+                margin: 0 auto;
+            }
+            
+            .about, .contact {
+                padding: 80px 5%;
+                margin: 30px 0;
             }
         }
 
         @media (max-width: 768px) {
+            :root {
+                --big-font: 1.8rem;
+                --h2-font: 2.2rem;
+                --normal-font: 1.5rem;
+            }
+            
             #menu-icon {
                 display: block;
             }
+            
             .navlist {
                 position: absolute;
                 top: 100%;
                 left: -100%;
                 width: 100%;
-                height: calc(100vh - 100px);
-                background: rgba(37, 8, 33, 0.95);
+                height: calc(100vh - 70px);
+                background: rgba(37, 8, 33, 0.98);
                 flex-direction: column;
                 align-items: center;
-                padding: 50px 0;
+                padding: 50px 20px;
                 transition: .5s ease;
                 backdrop-filter: blur(10px);
+                overflow-y: auto;
             }
+            
             .navlist.active {
                 left: 0;
             }
+            
             .navlist a {
                 display: block;
                 margin: 15px 0;
                 font-size: 1.2rem;
+                padding: 15px 25px;
             }
+            
             .info-box {
                 flex-direction: column;
                 gap: 10px;
                 width: 100%;
+                text-align: center;
+            }
+            
+            .change-text {
+                height: 80px;
+            }
+            
+            .threejs-container {
+                height: 350px;
+            }
+            
+            .contact-form {
+                padding: 25px;
+            }
+            
+            .submit-btn {
+                width: 100%;
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 576px) {
+            :root {
+                --big-font: 1.6rem;
+                --h2-font: 2rem;
+            }
+            
+            section {
+                padding: 100px 5% 60px;
+            }
+            
+            .home-content h1 {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+            }
+            
+            .change-text {
+                font-size: 1.2rem;
+                height: 70px;
+                margin-bottom: 15px;
+            }
+            
+            .home-content p {
+                font-size: 0.9rem;
+                margin-bottom: 20px;
+            }
+            
             .btn-box {
                 flex-direction: column;
                 height: auto;
                 gap: 15px;
                 width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
             }
+            
             .btn-box a.btn {
                 width: 100%;
             }
+            
             .social-icons {
                 width: 100%;
+                max-width: 300px;
                 justify-content: center;
                 gap: 15px;
+                margin-top: 3rem;
             }
+            
             .social-icons a {
                 width: 45px;
                 height: 45px;
             }
+            
+            .img-box {
+                width: 250px;
+                height: 250px;
+            }
+            
             .about-content, .contact-container {
                 flex-direction: column;
             }
+            
+            .threejs-container {
+                min-width: 100%;
+                height: 300px;
+            }
+            
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 5px;
+            }
+            
+            .contact-icon {
+                margin-bottom: 5px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            :root {
+                --big-font: 1.4rem;
+                --h2-font: 1.8rem;
+            }
+            
+            .logo {
+                font-size: 22px;
+            }
+            
+            .img-box {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .home-content h1 {
+                font-size: 1.6rem;
+            }
+            
+            .change-text {
+                font-size: 1.1rem;
+                height: 60px;
+            }
+            
             .contact-form {
-                padding: 25px;
+                padding: 20px 15px;
+            }
+        }
+
+        /* Mobile-specific adjustments */
+        @media (hover: none) and (pointer: coarse) {
+            /* Disable hover effects on touch devices */
+            .navlist a:hover::before {
+                width: 0;
+            }
+            
+            .navlist a:hover {
+                color: var(--text-color);
+                text-shadow: none;
+            }
+            
+            /* Make buttons slightly larger for better touch targets */
+            .btn-box a.btn, .social-icons a, .submit-btn {
+                min-height: 50px;
+            }
+            
+            /* Adjust font sizes for better readability */
+            .home-content p, .about-text p, .contact-info p {
+                font-size: 1rem;
+                line-height: 1.7;
+            }
+            
+            /* Increase tap targets for navigation */
+            .navlist a {
+                padding: 15px 30px;
+            }
+            
+            /* Prevent Three.js from consuming too much memory */
+            #threejs-bg, #threejs-canvas {
+                transform: translateZ(0);
+                backface-visibility: hidden;
+                perspective: 1000;
+            }
+        }
+
+        /* Orientation-specific adjustments */
+        @media screen and (orientation: portrait) {
+            .home {
+                min-height: calc(var(--vh, 1vh) * 100);
+            }
+            
+            .img-box {
+                width: 70vw;
+                height: 70vw;
+                max-width: 300px;
+                max-height: 300px;
+            }
+        }
+
+        @media screen and (orientation: landscape) and (max-height: 500px) {
+            .home {
+                grid-template-columns: 1fr;
+                height: auto;
+                padding-top: 80px;
+                padding-bottom: 80px;
+            }
+            
+            .img-box {
+                width: 40vh;
+                height: 40vh;
+                margin: 20px auto;
+            }
+            
+            .social-icons {
+                margin-top: 3rem;
             }
         }
     </style>
@@ -965,8 +1178,7 @@
         
         // Camera setup
         const bgCamera = new THREE.PerspectiveCamera(
-            75, 
-            window.innerWidth / window.innerHeight, 
+            75,            window.innerWidth / window.innerHeight, 
             0.1, 
             1000
         );
@@ -1099,7 +1311,7 @@
             colorArray[i] = Math.random();
         }
         
-                particlesGeometry.setAttribute(
+        particlesGeometry.setAttribute(
             'position',
             new THREE.BufferAttribute(posArray, 3)
         );
@@ -1227,6 +1439,57 @@
 
         window.addEventListener('resize', adjustViewportHeight);
         adjustViewportHeight();
+
+        // Optimize performance for mobile devices
+        function optimizeForMobile() {
+            if (/Mobi|Android/i.test(navigator.userAgent)) {
+                // Reduce particle count on mobile
+                bgParticleMesh.geometry.dispose();
+                bgParticleMesh.material.dispose();
+                bgScene.remove(bgParticleMesh);
+                
+                const mobileParticleCount = 800;
+                const mobilePosArray = new Float32Array(mobileParticleCount * 3);
+                
+                for(let i = 0; i < mobileParticleCount * 3; i++) {
+                    mobilePosArray[i] = (Math.random() - 0.5) * 20;
+                }
+                
+                const mobileParticlesGeometry = new THREE.BufferGeometry();
+                mobileParticlesGeometry.setAttribute(
+                    'position',
+                    new THREE.BufferAttribute(mobilePosArray, 3)
+                );
+                
+                const mobileParticlesMaterial = new THREE.PointsMaterial({
+                    size: 0.08,
+                    color: 0x12f7ff,
+                    transparent: true,
+                    opacity: 0.8,
+                    blending: THREE.AdditiveBlending
+                });
+                
+                const mobileParticleMesh = new THREE.Points(mobileParticlesGeometry, mobileParticlesMaterial);
+                bgScene.add(mobileParticleMesh);
+                
+                // Reduce animation intensity
+                function mobileBgAnimate() {
+                    requestAnimationFrame(mobileBgAnimate);
+                    
+                    bgSphere.rotation.x += 0.0005;
+                    bgSphere.rotation.y += 0.0005;
+                    
+                    mobileParticleMesh.rotation.x += 0.0001;
+                    mobileParticleMesh.rotation.y += 0.00015;
+                    
+                    bgRenderer.render(bgScene, bgCamera);
+                }
+                
+                mobileBgAnimate();
+            }
+        }
+
+        optimizeForMobile();
     </script>
 </body>
 </html>
