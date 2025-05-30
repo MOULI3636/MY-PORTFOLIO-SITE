@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouli Banerjee - Professional Resume</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --light-text: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        header {
+            background: var(--primary-color);
+            color: white;
+            padding: 35px 30px;
+            position: relative;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .contact-link {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        .contact-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .contact-link i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        
+        section {
+            padding: 25px 35px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        section:last-child {
+            border-bottom: none;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 8px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--secondary-color);
+            border-radius: 3px;
+        }
+        
+        h3 {
+            color: var(--dark-color);
+            margin: 18px 0 12px;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .education-item, .project-item, .internship-item, .certification-item, .achievement-item {
+            margin-bottom: 25px;
+        }
+        
+        .education-header, .project-header, .internship-header {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: baseline;
+        }
+        
+        .date {
+            color: var(--secondary-color);
+            font-weight: 500;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+        
+        ul {
+            padding-left: 22px;
+            margin: 12px 0;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        li::before {
+            content: '•';
+            color: var(--secondary-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+        }
+        
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .skill-category {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        
+        .skill-tag {
+            background: var(--light-color);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--dark-color);
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .print-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .print-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        @media print {
+            .print-btn {
+                display: none;
+            }
+            
+            body {
+                background: white;
+                font-size: 12pt;
+            }
+            
+            .container {
+                box-shadow: none;
+                margin: 0;
+                max-width: 100%;
+                border-radius: 0;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            .contact-link {
+                color: white !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 15px;
+                border-radius: 8px;
+            }
+            
+            header {
+                padding: 25px 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .contact-info {
+                gap: 12px;
+                justify-content: center;
+            }
+            
+            .contact-link {
+                font-size: 0.85rem;
+                padding: 4px 8px;
+            }
+            
+            section {
+                padding: 20px;
+            }
+            
+            .skills-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .print-btn {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mouli Banerjee</h1>
+            <div class="contact-info">
+                <a href="mailto:banerjeemouli26@gmail.com" class="contact-link">
+                    <i class="fas fa-envelope"></i> banerjeemouli26@gmail.com
+                </a>
+                <a href="https://leetcode.com/MOULI_BANERJEE/" target="_blank" class="contact-link">
+                    <i class="fas fa-code"></i> LeetCode
+                </a>
+                <a href="#" target="_blank" class="contact-link">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="tel:+917602927810" class="contact-link">
+                    <i class="fas fa-phone"></i> +91 7602927810
+                </a>
+            </div>
+        </header>
+        
+        <section id="education">
+            <h2>EDUCATION</h2>
+            <div class="education-item">
+                <div class="education-header">
+                    <h3>Bachelor of Technology (CSE), Lovely Professional University, Punjab</h3>
+                    <span class="date">2023 - 2027</span>
+                </div>
+                <p>CGPA: 8.3/10</p>
+            </div>
+            <div class="education-item">
+                <h3>Khatra High School, Bankura, West Bengal</h3>
+                <p>Intermediate: 96% (2021) | High School: 83% (2023)</p>
+            </div>
+        </section>
+        
+        <section id="projects">
+            <h2>PROJECTS</h2>
+            <div class="project-item">
+                <h3>Insight Predict ML Data Analyzer</h3>
+                <ul>
+                    <li>Developed a Python-based ML visualization tool with Tkinter for automated data analysis, predictive modeling, and interactive visualizations including SHAP and PCA.</li>
+                    <li>Created an intuitive dashboard for end-to-end machine learning workflows from preprocessing to model interpretation with dynamic plotting capabilities.</li>
+                    <li>Implemented regression, classification, ensemble methods and advanced analytics for comprehensive data exploration and model explainability.</li>
+                </ul>
+            </div>
+            <div class="project-item">
+                <h3>Online Educational Website</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">HTML</span>
+                    <span class="skill-tag">CSS</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">React.js</span>
+                    <span class="skill-tag">Three.js</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Streamlit</span>
+                    <span class="skill-tag">Blender</span>
+                </div>
+                <ul>
+                    <li>Developed an immersive online education platform featuring AI-driven research tools, interactive 3D virtual labs, and personalized learning roadmaps.</li>
+                    <li>Engineered a smart recommendation system for a digital library with 10k+ resources.</li>
+                    <li>Led a cross-functional agile team to deliver the MVP, enhancing engagement for both schools and universities through adaptive learning technologies.</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section id="internships">
+            <h2>INTERNSHIPS</h2>
+            <div class="internship-item">
+                <div class="internship-header">
+                    <h3>Innova World Pvt. Ltd.</h3>
+                    <h5>(1-Year AICTE Intern)</h5>
+                </div>
+                <ul>
+                    <li>Developed end-to-end machine learning solutions including predictive modeling (Linear/Logistic Regression, Random Forest, XGBoost) and data analysis pipelines using Python (Scikit-learn, Pandas, NumPy).</li>
+                    <li>Implemented interactive data visualization dashboards with Matplotlib, Seaborn, and Tkinter, incorporating advanced techniques like SHAP values and PCA for model interpretation.</li>
+                    <li>Built comprehensive data exploration tools with automated preprocessing (StandardScaler), feature engineering, and statistical analysis capabilities.</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section id="skills">
+            <h2>TECHNICAL SKILLS</h2>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3>Programming Languages</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">C/C++</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">React.js</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Three.js</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">MongoDB</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Frameworks/Libraries</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">NumPy</span>
+                        <span class="skill-tag">Pandas</span>
+                        <span class="skill-tag">Seaborn</span>
+                        <span class="skill-tag">Matplotlib</span>
+                        <span class="skill-tag">Scikit-learn</span>
+                        <span class="skill-tag">OS</span>
+                        <span class="skill-tag">Tkinter</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Core Skills</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Data Structures</span>
+                        <span class="skill-tag">Algorithms</span>
+                        <span class="skill-tag">Competitive Programming</span>
+                        <span class="skill-tag">Web Development</span>
+                        <span class="skill-tag">Machine Learning</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="certifications">
+            <h2>CERTIFICATIONS</h2>
+            <div class="certification-item">
+                <ul>
+                    <li><strong>NeoColab:</strong> C, C++, Data Structure and Algorithms, Java</li>
+                    <li><strong>Coursera:</strong> Computer Networks, Computer Design & Organization</li>
+                    <li><strong>e-box:</strong> SQL, PL/SQL</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section id="achievements">
+            <h2>ACHIEVEMENTS</h2>
+            <div class="achievement-item">
+                <ul>
+                    <li>Received letter of appreciation for being excellent and disciplined during internship from INNOVA WORLD.</li>
+                    <li>Created a Disaster Management project which got recommended for Web-A-Thon from University by Arena.</li>
+                    <li><strong>Event Management:</strong> Collaborated in organizing and managing different events and seminars through various organizations such as AWS, GitHub, Apna College LPU.</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    
+    <button class="print-btn" onclick="window.print()">
+        <i class="fas fa-print"></i> Print Resume
+    </button>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scroll animation for sections
+            const sections = document.querySelectorAll('section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            sections.forEach(section => {
+                section.style.opacity = 0;
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+            
+            // Add current year to education
+            const currentYear = new Date().getFullYear();
+            document.querySelector('.date').textContent = `2023 - ${currentYear}`;
+            
+            // Add click event for contact links
+            const contactLinks = document.querySelectorAll('.contact-link');
+            contactLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') === '#') {
+                        e.preventDefault();
+                        alert('Please update with your actual LinkedIn URL');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

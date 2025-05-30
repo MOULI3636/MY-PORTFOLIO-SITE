@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouli Banerjee - Professional Journey</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            list-style: none;
+            scroll-behavior: smooth;
+            text-decoration: none;
+        }
+
+        :root {
+            --text-color: #f5f5f5;
+            --hover-color: #12f7ff;
+            --bg-color: #250821;
+            --secon-bg-color: #292e33;
+            --big-font: 2.5rem;
+            --normal-font: 2rem;
+            --neon-box-shadow: 0 0 .5rem #12f7ff;
+            --h2-font: 3rem;
+            --font-neon-text-shadow: 0 0 10px rgba(18, 247, 255, 0.3),
+            0 0 20px rgba(18, 247, 255, 0.3),
+            0 0 30px rgba(18, 247, 255, 0.3),
+            0 0 40px rgba(18, 247, 255, 0.3),
+            0 0 70px rgba(18, 247, 255, 0.3),
+            0 0 80px rgba(18, 247, 255, 0.3),
+            0 0 100px rgba(18, 247, 255, 0.3),
+            0 0 150px rgba(18, 247, 255, 0.3);
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* Three.js Background */
+        #threejs-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 20px 10%;
+            background-color: rgba(37, 8, 33, 0.8);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(18, 247, 255, 0.1);
+        }
+
+        header.scrolled {
+            background-color: rgba(37, 8, 33, 0.95);
+            box-shadow: 0 5px 30px rgba(18, 247, 255, 0.1);
+            padding: 15px 10%;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, #12f7ff, #bafcff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(18, 247, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 20px rgba(18, 247, 255, 0.6);
+        }
+
+        span {
+            color: var(--hover-color);
+        }
+
+        .navlist {
+            display: flex;
+        }
+
+        .navlist a {
+            color: var(--text-color);
+            font-weight: 500;
+            padding: 10px 20px;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+            position: relative;
+            border-radius: 5px;
+        }
+
+        .navlist a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--hover-color);
+            transition: width 0.3s ease;
+        }
+
+        .navlist a:hover {
+            color: var(--hover-color);
+            text-shadow: var(--font-neon-text-shadow);
+        }
+
+        .navlist a:hover::before {
+            width: 80%;
+        }
+
+        #menu-icon {
+            font-size: 1.8rem;
+            z-index: 10001;
+            cursor: pointer;
+            margin-left: 25px;
+            background: var(--hover-color);
+            border-radius: 3px;
+            color: var(--secon-bg-color);
+            display: none;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+        }
+
+        #menu-icon:hover {
+            box-shadow: var(--neon-box-shadow);
+            transform: scale(1.05);
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 150px 10% 100px;
+            position: relative;
+        }
+
+        /* Experience Section */
+        .experience {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 10%;
+            position: relative;
+        }
+
+        .experience-header {
+            text-align: center;
+            margin-bottom: 50px;
+            z-index: 10;
+        }
+
+        .experience-header h2 {
+            font-size: var(--h2-font);
+            margin-bottom: 20px;
+            color: var(--hover-color);
+            text-shadow: var(--font-neon-text-shadow);
+        }
+
+        .experience-header p {
+            font-size: 1.2rem;
+            color: #bdbdbd;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .experience-stages {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            z-index: 10;
+        }
+
+        .stage {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(18, 247, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(18, 247, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .stage:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(18, 247, 255, 0.3);
+            border-color: var(--hover-color);
+        }
+
+        .stage::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--hover-color);
+            box-shadow: var(--neon-box-shadow);
+        }
+
+        .stage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stage-title {
+            font-size: 1.5rem;
+            color: var(--hover-color);
+            margin-bottom: 5px;
+        }
+
+        .stage-date {
+            color: var(--hover-color);
+            font-weight: 600;
+            background: rgba(18, 247, 255, 0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .stage-content {
+            color: #e6e6e6;
+            line-height: 1.8;
+        }
+
+        .stage-content ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        .stage-content li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .stage-content li::before {
+            content: '▹';
+            position: absolute;
+            left: -20px;
+            color: var(--hover-color);
+        }
+
+        /* Interactive Three.js Canvas */
+        .interactive-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Navigation Controls */
+        .stage-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+            z-index: 10;
+        }
+
+        .nav-btn {
+            background: rgba(18, 247, 255, 0.1);
+            color: var(--hover-color);
+            border: 1px solid var(--hover-color);
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-btn:hover {
+            background: var(--hover-color);
+            color: var(--bg-color);
+            box-shadow: var(--neon-box-shadow);
+        }
+
+        /* Hobby Section */
+        .hobby-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 60px;
+            border: 1px solid rgba(18, 247, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(18, 247, 255, 0.1);
+            transition: all 0.3s ease;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+        }
+
+        .hobby-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(18, 247, 255, 0.3);
+            border-color: var(--hover-color);
+        }
+
+        .hobby-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--hover-color);
+            text-align: center;
+        }
+
+        .hobby-content {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .hobby-text {
+            flex: 1;
+            color: #e6e6e6;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .hobby-icon {
+            font-size: 5rem;
+            color: var(--hover-color);
+            opacity: 0.7;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: rgba(15, 15, 35, 0.8);
+            color: #bdbdbd;
+            backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 10;
+            margin-top: 60px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 991px) {
+            header {
+                padding: 15px 5%;
+            }
+            section {
+                padding: 150px 5% 100px;
+            }
+            .hobby-content {
+                flex-direction: column;
+            }
+            .hobby-icon {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #menu-icon {
+                display: block;
+            }
+            .navlist {
+                position: absolute;
+                top: 100%;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 100px);
+                background: rgba(37, 8, 33, 0.95);
+                flex-direction: column;
+                align-items: center;
+                padding: 50px 0;
+                transition: .5s ease;
+                backdrop-filter: blur(10px);
+            }
+            .navlist.active {
+                left: 0;
+            }
+            .navlist a {
+                display: block;
+                margin: 15px 0;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stage {
+                padding: 20px;
+            }
+            .stage-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .stage-date {
+                align-self: flex-start;
+            }
+            .hobby-section {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Three.js Background -->
+    <div id="threejs-bg"></div>
+
+    <!-- Interactive Three.js Canvas -->
+    <canvas class="interactive-canvas" id="interactive-canvas"></canvas>
+
+    <!-- Header -->
+    <header>
+        <div class="logo"><span>M</span>ouli.</div>
+        <ul class="navlist">
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="Skills.html">Skills</a></li>
+            <li><a href="Projects.html">Projects</a></li>
+            <li><a href="Experiences.html">Experience</a></li>
+            <li><a href="Certifications.html">Certifications</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div id="menu-icon" class="bx bx-menu"></div>
+    </header>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="experience-header">
+            <h2>My Professional Journey</h2>
+            <p>From academic pursuits to professional experiences and personal passions - a timeline of my growth and achievements</p>
+        </div>
+
+        <div class="experience-stages">
+            <!-- Education -->
+            <div class="stage" data-stage="1">
+                <div class="stage-header">
+                    <div>
+                        <h3 class="stage-title">B.Tech in Computer Science & Engineering</h3>
+                        <div class="stage-date"><i class="fas fa-graduation-cap"></i> 2023 - 2027 (4 Year)</div>
+                    </div>
+                    <div class="stage-icon"><i class="fas fa-university"></i></div>
+                </div>
+                <div class="stage-content">
+                    <p>Currently pursuing my bachelor's degree at Lovely Professional University with specialization in:</p>
+                    <ul>
+                        <li>Artificial Intelligence and Machine Learning</li>
+                        <li>Data Structures and Algorithms</li>
+                        <li>Web Development and Cloud Computing</li>
+                    </ul>
+                    <p>Maintained strong academic performance while actively participating in coding competitions and technical events.</p>
+                </div>
+            </div>
+
+            <!-- Internship -->
+            <div class="stage" data-stage="2">
+                <div class="stage-header">
+                    <div>
+                        <h3 class="stage-title">Data Analyst Intern</h3>
+                        <div class="stage-date"><i class="fas fa-briefcase"></i> 2023 - 2024 (1 Year)</div>
+                    </div>
+                    <div class="stage-icon"><i class="fas fa-chart-line"></i></div>
+                </div>
+                <div class="stage-content">
+                    <p>Worked with Academy Innova World under AICTE, gaining hands-on experience in:</p>
+                    <ul>
+                        <li>Data modeling and predictive analytics</li>
+                        <li>Business intelligence dashboard development</li>
+                        <li>Python, SQL, and data visualization tools</li>
+                        <li>Working with real-world datasets to derive actionable insights</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Hackathons -->
+            <div class="stage" data-stage="3">
+                <div class="stage-header">
+                    <div>
+                        <h3 class="stage-title">Hackathon Achievements</h3>
+                        <div class="stage-date"><i class="fas fa-code"></i> 2025 - Present</div>
+                    </div>
+                    <div class="stage-icon"><i class="fas fa-laptop-code"></i></div>
+                </div>
+                <div class="stage-content">
+                    <p>Competed in numerous hackathons, demonstrating problem-solving skills under pressure:</p>
+                    <ul>
+                        <li>5th position in 36-hour inter-college hackathon at GNA University</li>
+                        <li>Participated in Web-a-thon, RCS Capture-the-Flag, Build-a-Thon, Code-a-Haunt</li>
+                        <li>Developed innovative solutions for real-world problems within tight deadlines</li>
+                        <li>Collaborated with diverse teams to create functional prototypes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- AWS Club -->
+            <div class="stage" data-stage="4">
+                <div class="stage-header">
+                    <div>
+                        <h3 class="stage-title">AWS Club Leadership</h3>
+                        <div class="stage-date"><i class="fas fa-users"></i> 2023 - 2024 (1 Year)</div>
+                    </div>
+                    <div class="stage-icon"><i class="fab fa-aws"></i></div>
+                </div>
+                <div class="stage-content">
+                    <p>As an ex-member of AWS Club LPU, I contributed by:</p>
+                    <ul>
+                        <li>Organizing 10+ technical events and workshops on cloud computing</li>
+                        <li>Coordinating hackathons and coding competitions</li>
+                        <li>Helping students learn AWS technologies and services</li>
+                        <li>Managing event logistics and promotional activities</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- NGO Work -->
+            <div class="stage" data-stage="5">
+                <div class="stage-header">
+                    <div>
+                        <h3 class="stage-title">NGO Volunteer - Child Care Initiative</h3>
+                        <div class="stage-date"><i class="fas fa-hands-helping"></i> Summer 2024 (2 Months)</div>
+                    </div>
+                    <div class="stage-icon"><i class="fas fa-child"></i></div>
+                </div>
+                <div class="stage-content">
+                    <p>Dedicated time to teaching underprivileged children:</p>
+                    <ul>
+                        <li>Basic computer skills and digital literacy</li>
+                        <li>Mathematics and logical thinking</li>
+                        <li>Helped develop curriculum for educational programs</li>
+                        <li>Organized interactive learning activities</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- YouTube -->
+            <div class="stage" data-stage="6">
+                <div class="stage-header">
+                    <div>
+                        <h3 class="stage-title">Code to Placement Pro (YouTube)</h3>
+                        <div class="stage-date"><i class="fab fa-youtube"></i> Starting July 2025</div>
+                    </div>
+                    <div class="stage-icon"><i class="fas fa-video"></i></div>
+                </div>
+                <div class="stage-content">
+                    <p>Launching an educational YouTube channel focused on:</p>
+                    <ul>
+                        <li>Coding tutorials and project walkthroughs</li>
+                        <li>Interview preparation and DSA concepts</li>
+                        <li>Career guidance for aspiring developers</li>
+                        <li>Bridging the gap between academia and industry</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="stage-nav">
+            <button class="nav-btn" id="prev-stage"><i class="fas fa-arrow-left"></i> Previous</button>
+            <button class="nav-btn" id="next-stage">Next <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <!-- Hobby Section -->
+        <div class="hobby-section">
+            <h3 class="hobby-title">Beyond Technology: Tarot Card Reading</h3>
+            <div class="hobby-content">
+                <div class="hobby-text">
+                    <p>With 2 years of experience in tarot reading, I've developed a unique skill set that complements my technical abilities:</p>
+                    <ul>
+                        <li>Enhanced intuition and pattern recognition skills</li>
+                        <li>Improved ability to understand complex situations from multiple perspectives</li>
+                        <li>Developed strong interpersonal and counseling skills</li>
+                        <li>Helped individuals gain clarity and make important life decisions</li>
+                    </ul>
+                    <p>This practice has surprisingly helped me approach technical problems with more creativity and open-mindedness.</p>
+                </div>
+                <div class="hobby-icon">
+                    <i class="fas fa-cards"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; Mouli Banerjee | Creating smarter technology for a brighter tomorrow.</p>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuIcon = document.getElementById('menu-icon');
+        const navlist = document.querySelector('.navlist');
+
+        menuIcon.addEventListener('click', () => {
+            navlist.classList.toggle('active');
+            menuIcon.classList.toggle('bx-x');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.navlist a').forEach(link => {
+            link.addEventListener('click', () => {
+                navlist.classList.remove('active');
+                menuIcon.classList.remove('bx-x');
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 100);
+        });
+
+        // Three.js Background Animation
+        const bgContainer = document.getElementById('threejs-bg');
+        
+        // Scene setup
+        const bgScene = new THREE.Scene();
+        
+        // Camera setup
+        const bgCamera = new THREE.PerspectiveCamera(
+            75, 
+            window.innerWidth / window.innerHeight, 
+            0.1, 
+            1000
+        );
+        bgCamera.position.z = 5;
+        
+        // Renderer setup
+        const bgRenderer = new THREE.WebGLRenderer({ 
+            alpha: true,
+            antialias: true 
+        });
+        bgRenderer.setSize(window.innerWidth, window.innerHeight);
+        bgRenderer.setPixelRatio(window.devicePixelRatio);
+        bgContainer.appendChild(bgRenderer.domElement);
+        
+        // Create particles for background
+        const bgParticlesGeometry = new THREE.BufferGeometry();
+        const bgParticleCount = 3000;
+        
+        const bgPosArray = new Float32Array(bgParticleCount * 3);
+        const bgColorArray = new Float32Array(bgParticleCount * 3);
+        
+        for(let i = 0; i < bgParticleCount * 3; i++) {
+            bgPosArray[i] = (Math.random() - 0.5) * 30;
+            bgColorArray[i] = Math.random() * 0.5 + 0.5;
+        }
+        
+        bgParticlesGeometry.setAttribute(
+            'position',
+            new THREE.BufferAttribute(bgPosArray, 3)
+        );
+        
+        bgParticlesGeometry.setAttribute(
+            'color',
+            new THREE.BufferAttribute(bgColorArray, 3)
+        );
+        
+        const bgParticlesMaterial = new THREE.PointsMaterial({
+            size: 0.1,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending,
+            sizeAttenuation: true
+        });
+        
+        const bgParticleMesh = new THREE.Points(bgParticlesGeometry, bgParticlesMaterial);
+        bgScene.add(bgParticleMesh);
+        
+        // Create multiple wireframe spheres for background
+        const spheres = [];
+        const sphereCount = 5;
+        
+        for (let i = 0; i < sphereCount; i++) {
+            const size = 1 + Math.random() * 3;
+            const sphereGeometry = new THREE.SphereGeometry(size, 16, 16);
+            const sphereMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x12f7ff,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.05 + Math.random() * 0.1,
+            });
+            
+            const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+            sphere.position.set(
+                (Math.random() - 0.5) * 20,
+                (Math.random() - 0.5) * 20,
+                (Math.random() - 0.5) * 20
+            );
+            
+            sphere.userData = {
+                speed: 0.001 + Math.random() * 0.003,
+                rotationSpeed: 0.001 + Math.random() * 0.002
+            };
+            
+            bgScene.add(sphere);
+            spheres.push(sphere);
+        }
+        
+        // Animation loop for background
+        function bgAnimate() {
+            requestAnimationFrame(bgAnimate);
+            
+            // Animate spheres
+            spheres.forEach(sphere => {
+                sphere.rotation.x += sphere.userData.rotationSpeed;
+                sphere.rotation.y += sphere.userData.rotationSpeed;
+                sphere.position.y += sphere.userData.speed;
+                
+                if (sphere.position.y > 15) {
+                    sphere.position.y = -15;
+                }
+            });
+            
+            bgParticleMesh.rotation.x += 0.0001;
+            bgParticleMesh.rotation.y += 0.0002;
+            
+            bgRenderer.render(bgScene, bgCamera);
+        }
+        
+        bgAnimate();
+        
+        // Handle window resize for background
+        window.addEventListener('resize', () => {
+            bgCamera.aspect = window.innerWidth / window.innerHeight;
+            bgCamera.updateProjectionMatrix();
+            bgRenderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Interactive Three.js Visualization
+        const interactiveCanvas = document.getElementById('interactive-canvas');
+        
+        // Scene setup
+        const scene = new THREE.Scene();
+        scene.background = null;
+        
+        // Camera setup
+        const camera = new THREE.PerspectiveCamera(
+            75, 
+            window.innerWidth / window.innerHeight, 
+            0.1, 
+            1000
+        );
+        camera.position.z = 15;
+        
+        // Renderer setup
+        const renderer = new THREE.WebGLRenderer({ 
+            canvas: interactiveCanvas,
+            antialias: true,
+            alpha: true
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+        scene.add(ambientLight);
+        
+        const directionalLight1 = new THREE.DirectionalLight(0x12f7ff, 1);
+        directionalLight1.position.set(1, 1, 1);
+        scene.add(directionalLight1);
+        
+        const directionalLight2 = new THREE.DirectionalLight(0xff00ff, 0.5);
+        directionalLight2.position.set(-1, -1, -1);
+        scene.add(directionalLight2);
+        
+        // Create a path for the journey visualization
+        const pathCurve = new THREE.CatmullRomCurve3([
+            new THREE.Vector3(-10, 0, 0),
+            new THREE.Vector3(-5, 3, 2),
+            new THREE.Vector3(0, 0, 5),
+            new THREE.Vector3(5, -3, 2),
+            new THREE.Vector3(10, 0, 0),
+            new THREE.Vector3(5, 3, -2),
+            new THREE.Vector3(0, 0, -5),
+            new THREE.Vector3(-5, -3, -2),
+            new THREE.Vector3(-10, 0, 0)
+        ]);
+        
+        const pathGeometry = new THREE.TubeGeometry(pathCurve, 100, 0.05, 8, false);
+        const pathMaterial = new THREE.MeshBasicMaterial({
+            color: 0x12f7ff,
+            transparent: true,
+            opacity: 0.3
+        });
+        const pathMesh = new THREE.Mesh(pathGeometry, pathMaterial);
+        scene.add(pathMesh);
+        
+        // Create milestone markers along the path
+        const markers = [];
+        const markerCount = 6;
+        const markerGeometry = new THREE.SphereGeometry(0.3, 16, 16);
+        
+        for (let i = 0; i < markerCount; i++) {
+            const t = i / markerCount;
+            const position = pathCurve.getPointAt(t);
+            
+            const markerMaterial = new THREE.MeshPhongMaterial({
+                color: 0x12f7ff,
+                emissive: 0x12f7ff,
+                emissiveIntensity: 0.3,
+                specular: 0x111111,
+                shininess: 30,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+            marker.position.copy(position);
+            marker.userData = {
+                stage: i + 1,
+                originalPosition: position.clone(),
+                hover: false
+            };
+            
+            // Add pulsing animation
+            marker.update = function(time) {
+                const scale = 1 + Math.sin(time * 0.003 + i) * 0.2;
+                this.scale.set(scale, scale, scale);
+                
+                if (this.userData.hover) {
+                    this.position.y = this.userData.originalPosition.y + Math.sin(time * 0.01) * 0.5;
+                    this.material.emissiveIntensity = 0.8;
+                } else {
+                    this.position.copy(this.userData.originalPosition);
+                    this.material.emissiveIntensity = 0.3;
+                }
+            };
+            
+            scene.add(marker);
+            markers.push(marker);
+        }
+        
+        // Add connecting lines between markers
+        const lineMaterial = new THREE.LineBasicMaterial({
+            color: 0x12f7ff,
+            transparent: true,
+            opacity: 0.2
+        });
+        
+        for (let i = 0; i < markerCount - 1; i++) {
+            const points = [
+                markers[i].position.clone(),
+                markers[i + 1].position.clone()
+            ];
+            
+            const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+            const line = new THREE.Line(lineGeometry, lineMaterial);
+            scene.add(line);
+        }
+        
+        // Add floating icons representing each stage
+        const iconTextures = [
+            '🎓', '📊', '💻', '☁️', '👶', '🎥'
+        ];
+        
+        const icons = [];
+        const iconSize = 0.8;
+        
+        for (let i = 0; i < markerCount; i++) {
+            const t = i / markerCount;
+            const position = pathCurve.getPointAt(t);
+            
+            // Create canvas for text texture
+            const canvas = document.createElement('canvas');
+            canvas.width = 128;
+            canvas.height = 128;
+            const context = canvas.getContext('2d');
+            
+            context.fillStyle = 'rgba(0, 0, 0, 0)';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.font = '100px Arial';
+            context.textAlign = 'center';
+            context.textBaseline = 'middle';
+            context.fillStyle = '#12f7ff';
+            context.fillText(iconTextures[i], canvas.width / 2, canvas.height / 2);
+            
+            const texture = new THREE.CanvasTexture(canvas);
+            const iconMaterial = new THREE.SpriteMaterial({
+                map: texture,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const icon = new THREE.Sprite(iconMaterial);
+            icon.position.copy(position);
+            icon.position.y += 1.5;
+            icon.scale.set(iconSize, iconSize, iconSize);
+            icon.userData = {
+                stage: i + 1
+            };
+            
+            scene.add(icon);
+            icons.push(icon);
+        }
+        
+        // Add floating particles around the path
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particleCount = 2000;
+        
+        const posArray = new Float32Array(particleCount * 3);
+        
+        for (let i = 0; i < particleCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 20;
+        }
+        
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.05,
+            color: 0x12f7ff,
+            transparent: true,
+            opacity: 0.5,
+            blending: THREE.AdditiveBlending
+        });
+        
+        const particleSystem = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particleSystem);
+        
+        // Animation variables
+        let currentStage = 1;
+        let targetCameraPosition = new THREE.Vector3();
+        let targetCameraLookAt = new THREE.Vector3();
+        
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            const time = Date.now();
+            
+            // Update markers
+            markers.forEach(marker => {
+                marker.update(time);
+                
+                // Highlight current stage marker
+                if (marker.userData.stage === currentStage) {
+                    marker.material.color.setHSL(0.5, 0.8, 0.7);
+                    marker.material.emissive.setHSL(0.5, 0.8, 0.3);
+                } else {
+                    const hue = (marker.userData.stage / markerCount) * 0.8;
+                    marker.material.color.setHSL(hue, 0.5, 0.5);
+                    marker.material.emissive.setHSL(hue, 0.5, 0.2);
+                }
+            });
+            
+            // Update icons
+            icons.forEach(icon => {
+                icon.position.y = markers[icon.userData.stage - 1].position.y + 1.5 + Math.sin(time * 0.002 + icon.userData.stage) * 0.3;
+                
+                // Highlight current stage icon
+                if (icon.userData.stage === currentStage) {
+                    icon.material.opacity = 1;
+                    icon.scale.set(iconSize * 1.2, iconSize * 1.2, iconSize * 1.2);
+                } else {
+                    icon.material.opacity = 0.6;
+                    icon.scale.set(iconSize, iconSize, iconSize);
+                }
+            });
+            
+            // Update camera position to focus on current stage
+            const marker = markers[currentStage - 1];
+            targetCameraPosition.set(
+                marker.position.x * 1.5,
+                marker.position.y * 1.5 + 3,
+                marker.position.z * 1.5 + 10
+            );
+            
+            targetCameraLookAt.copy(marker.position);
+            
+            camera.position.lerp(targetCameraPosition, 0.05);
+            camera.lookAt(targetCameraLookAt);
+            
+            // Rotate the entire scene slowly
+            scene.rotation.y += 0.001;
+            
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        // Stage navigation
+        const stages = document.querySelectorAll('.stage');
+        const prevBtn = document.getElementById('prev-stage');
+        const nextBtn = document.getElementById('next-stage');
+        
+        function updateCurrentStage(newStage) {
+            currentStage = newStage;
+            
+            // Scroll to corresponding stage
+            stages.forEach(stage => {
+                if (parseInt(stage.dataset.stage) === currentStage) {
+                    stage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        }
+        
+        prevBtn.addEventListener('click', () => {
+            updateCurrentStage(currentStage > 1 ? currentStage - 1 : markerCount);
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            updateCurrentStage(currentStage < markerCount ? currentStage + 1 : 1);
+        });
+        
+        // Highlight stage on hover
+        stages.forEach(stage => {
+            stage.addEventListener('mouseenter', () => {
+                const stageNum = parseInt(stage.dataset.stage);
+                markers[stageNum - 1].userData.hover = true;
+            });
+            
+            stage.addEventListener('mouseleave', () => {
+                const stageNum = parseInt(stage.dataset.stage);
+                markers[stageNum - 1].userData.hover = false;
+            });
+            
+            stage.addEventListener('click', () => {
+                updateCurrentStage(parseInt(stage.dataset.stage));
+            });
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                updateCurrentStage(currentStage > 1 ? currentStage - 1 : markerCount);
+            } else if (e.key === 'ArrowRight') {
+                updateCurrentStage(currentStage < markerCount ? currentStage + 1 : 1);
+            }
+        });
+    </script>
+</body>
+</html>

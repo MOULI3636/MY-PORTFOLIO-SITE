@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#250821">
+    <title>Mouli Banerjee - Projects</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            list-style: none;
+            scroll-behavior: smooth;
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --text-color: #f5f5f5;
+            --hover-color: #12f7ff;
+            --bg-color: #250821;
+            --secon-bg-color: #292e33;
+            --big-font: 2.5rem;
+            --normal-font: 2rem;
+            --neon-box-shadow: 0 0 .5rem #12f7ff;
+            --h2-font: 3rem;
+            --font-neon-text-shadow: 0 0 10px rgba(18, 247, 255, 0.3),
+            0 0 20px rgba(18, 247, 255, 0.3),
+            0 0 30px rgba(18, 247, 255, 0.3),
+            0 0 40px rgba(18, 247, 255, 0.3),
+            0 0 70px rgba(18, 247, 255, 0.3),
+            0 0 80px rgba(18, 247, 255, 0.3),
+            0 0 100px rgba(18, 247, 255, 0.3),
+            0 0 150px rgba(18, 247, 255, 0.3);
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Three.js Background */
+        #threejs-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+            touch-action: none;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 20px 10%;
+            background-color: rgba(37, 8, 33, 0.8);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(18, 247, 255, 0.1);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        header.scrolled {
+            background-color: rgba(37, 8, 33, 0.95);
+            box-shadow: 0 5px 30px rgba(18, 247, 255, 0.1);
+            padding: 15px 10%;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, #12f7ff, #bafcff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(18, 247, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 20px rgba(18, 247, 255, 0.6);
+        }
+
+        span {
+            color: var(--hover-color);
+        }
+
+        .navlist {
+            display: flex;
+        }
+
+        .navlist a {
+            color: var(--text-color);
+            font-weight: 500;
+            padding: 10px 20px;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+            position: relative;
+            border-radius: 5px;
+        }
+
+        .navlist a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--hover-color);
+            transition: width 0.3s ease;
+        }
+
+        .navlist a:hover {
+            color: var(--hover-color);
+            text-shadow: var(--font-neon-text-shadow);
+        }
+
+        .navlist a:hover::before {
+            width: 80%;
+        }
+
+        #menu-icon {
+            font-size: 1.8rem;
+            z-index: 10001;
+            cursor: pointer;
+            margin-left: 25px;
+            background: var(--hover-color);
+            border-radius: 3px;
+            color: var(--secon-bg-color);
+            display: none;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+        }
+
+        #menu-icon:hover {
+            box-shadow: var(--neon-box-shadow);
+            transform: scale(1.05);
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 150px 10% 100px;
+            position: relative;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding-top: 120px;
+        }
+
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 4rem;
+        }
+
+        .project-box {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(26, 26, 46, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(18, 247, 255, 0.1);
+            box-shadow: 0 0 30px rgba(18, 247, 255, 0.1);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .project-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 50px rgba(18, 247, 255, 0.3);
+            border: 1px solid var(--hover-color);
+        }
+
+        .project-img {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-box:hover .project-img img {
+            transform: scale(1.1);
+        }
+
+        .project-content {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--hover-color);
+        }
+
+        .project-content p {
+            color: #bdbdbd;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tech-tag {
+            background: rgba(18, 247, 255, 0.1);
+            color: var(--hover-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(18, 247, 255, 0.3);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--bg-color);
+            color: var(--hover-color);
+            border: 2px solid var(--hover-color);
+            border-radius: 5px;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .project-link i {
+            font-size: 1.2rem;
+        }
+
+        .project-link:hover {
+            color: var(--bg-color);
+        }
+
+        .project-link::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: var(--hover-color);
+            transition: .6s;
+            z-index: -1;
+        }
+
+        .project-link:hover::before {
+            width: 100%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: var(--h2-font);
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--hover-color);
+            text-shadow: var(--font-neon-text-shadow);
+        }
+
+        .section-title span {
+            display: inline-block;
+            width: 80px;
+            height: 4px;
+            background: var(--hover-color);
+            margin: 0 auto;
+            box-shadow: var(--neon-box-shadow);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(15, 15, 35, 0.8);
+            color: #bdbdbd;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 991px) {
+            header {
+                padding: 15px 5%;
+            }
+            section {
+                padding: 150px 5% 100px;
+            }
+            .projects-container {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            #menu-icon {
+                display: block;
+            }
+            .navlist {
+                position: absolute;
+                top: 100%;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 100px);
+                background: rgba(37, 8, 33, 0.95);
+                flex-direction: column;
+                align-items: center;
+                padding: 50px 0;
+                transition: .5s ease;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
+            .navlist.active {
+                left: 0;
+            }
+            .navlist a {
+                display: block;
+                margin: 15px 0;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .projects-container {
+                grid-template-columns: 1fr;
+            }
+            .project-box {
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Three.js Background -->
+    <div id="threejs-bg"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo"><span>M</span>ouli.</div>
+        <ul class="navlist">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="Skills.html">Skills</a></li>
+            <li><a href="Projects.html">Projects</a></li>
+            <li><a href="Experiences.html">Experience</a></li>
+            <li><a href="Certifications.html">Certifications</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div id="menu-icon" class="bx bx-menu"></div>
+    </header>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="section-title">
+            <h2>My Projects</h2>
+            <span></span>
+        </div>
+
+        <div class="projects-container">
+            <!-- Project 1 -->
+            <div class="project-box">
+                <div class="project-img">
+                    <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" alt="EduWeb Project">
+                </div>
+                <div class="project-content">
+                    <h3>EduWeb - Interactive Learning Platform</h3>
+                    <p>An innovative education website featuring a 3D interactive lab view designed specifically for school and college students. This platform revolutionizes STEM education by providing immersive virtual laboratory experiences where students are engaging in virtual environment. The 3D lab interface includes realistic equipment.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">html</span>
+                        <span class="tech-tag">css</span>
+                        <span class="tech-tag">Three.js</span>
+                        <span class="tech-tag">React.js</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link" title="Live Demo"><i class="fas fa-external-link-alt"></i></a>
+                        <a href="#" class="project-link" title="View Code"><i class="fab fa-github"></i></a>
+                        <a href="#" class="project-link" title="Case Study"><i class="fas fa-book-open"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-box">
+                <div class="project-img">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Insight Predict ML">
+                </div>
+                <div class="project-content">
+                    <h3>Insight Predict ML</h3>
+                    <p>An intelligent tool for evaluating machine learning models with support for PCA-based dimensionality reduction and SHAP value-based model interpretability. Simplifies data uploads, model selection, and provides clear, insightful prediction analyses. Features include automated hyperparameter tuning, model comparison dashboards, and exportable reports with performance metrics and feature importance visualizations.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Scikit-learn</span>
+                        <span class="tech-tag">Streamlit</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link" title="Live Demo"><i class="fas fa-external-link-alt"></i></a>
+                        <a href="#" class="project-link" title="View Code"><i class="fab fa-github"></i></a>
+                        <a href="#" class="project-link" title="Case Study"><i class="fas fa-book-open"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-box">
+                <div class="project-img">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1415&q=80" alt="Border Crossing Dashboard">
+                </div>
+                <div class="project-content">
+                    <h3>Border Crossing Analytics Dashboard</h3>
+                    <p>Interactive Excel dashboard analyzing border crossing data from Data.gov. Processes over 4 Lakh records to visualize traffic patterns, seasonal trends, and transportation mode across US borders. Features dynamic filters, predictive modeling for future crossings, and automated data refresh from the government API. Provides actionable insights for logistics planning.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Advanced Excel</span>
+                        <span class="tech-tag">Power Pivot</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link" title="Download"><i class="fas fa-file-excel"></i></a>
+                        <a href="#" class="project-link" title="View Code"><i class="fab fa-github"></i></a>
+                        <a href="#" class="project-link" title="Documentation"><i class="fas fa-file-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-box">
+                <div class="project-img">
+                    <img src="https://images.unsplash.com/photo-1581093450021-4a7360e9a6e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Location Tracker">
+                </div>
+                <div class="project-content">
+                    <h3>Real-Time Location Tracker</h3>
+                    <p>A privacy-conscious location tracking system that provides real-time positioning with mobile number input. Features include geofencing alerts, historical movement patterns, and estimated time of arrival calculations. Built with robust security measures including end-to-end encryption and strict access controls. Useful for logistics and emergency response applications.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Google Maps API</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link" title="App Store"><i class="fab fa-app-store"></i></a>
+                        <a href="#" class="project-link" title="Play Store"><i class="fab fa-google-play"></i></a>
+                        <a href="#" class="project-link" title="View Code"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-box">
+                <div class="project-img">
+                    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Stock Market Predictor">
+                </div>
+                <div class="project-content">
+                    <h3>AI Stock Market Predictor</h3>
+                    <p>Real-time stock market prediction system using advanced AI/ML algorithms including LSTM neural networks and random forest regression. Integrates with multiple financial APIs to analyze historical data, news sentiment, and market indicators. Provides buy/sell recommendations with confidence scores and visual trend analysis. Portfolio simulation for strategy testing.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Alpha Vantage API</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link" title="Live Demo"><i class="fas fa-external-link-alt"></i></a>
+                        <a href="#" class="project-link" title="View Code"><i class="fab fa-github"></i></a>
+                        <a href="#" class="project-link" title="Research Paper"><i class="fas fa-file-pdf"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="project-box">
+                <div class="project-img">
+                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="CPU Scheduling Simulator">
+                </div>
+                <div class="project-content">
+                    <h3>CPU Scheduling Algorithm Simulator</h3>
+                    <p>Interactive educational tool demonstrating CPU scheduling algorithms including FCFS, SJF, Round Robin, and Priority Scheduling. Features animated Gantt charts. Designed to help visualize and understand how different scheduling algorithms affect system performance metrics like waiting time, turnaround time, and throughput.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">Bootstrap</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link" title="Live Demo"><i class="fas fa-external-link-alt"></i></a>
+                        <a href="#" class="project-link" title="View Code"><i class="fab fa-github"></i></a>
+                        <a href="#" class="project-link" title="Tutorial"><i class="fas fa-chalkboard-teacher"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; Mouli Banerjee | Creating smarter technology for a brighter tomorrow.</p>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuIcon = document.getElementById('menu-icon');
+        const navlist = document.querySelector('.navlist');
+
+        menuIcon.addEventListener('click', () => {
+            navlist.classList.toggle('active');
+            menuIcon.classList.toggle('bx-x');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.navlist a').forEach(link => {
+            link.addEventListener('click', () => {
+                navlist.classList.remove('active');
+                menuIcon.classList.remove('bx-x');
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 100);
+        });
+
+        // Three.js Background Animation
+        const bgContainer = document.getElementById('threejs-bg');
+        
+        // Scene setup
+        const bgScene = new THREE.Scene();
+        
+        // Camera setup
+        const bgCamera = new THREE.PerspectiveCamera(
+            75, 
+            window.innerWidth / window.innerHeight, 
+            0.1, 
+            1000
+        );
+        bgCamera.position.z = 5;
+        
+        // Renderer setup
+        const bgRenderer = new THREE.WebGLRenderer({ 
+            alpha: true,
+            antialias: true 
+        });
+        bgRenderer.setSize(window.innerWidth, window.innerHeight);
+        bgRenderer.setPixelRatio(window.devicePixelRatio);
+        bgContainer.appendChild(bgRenderer.domElement);
+        
+        // Create particles for background
+        const bgParticlesGeometry = new THREE.BufferGeometry();
+        const bgParticleCount = 2000;
+        
+        const bgPosArray = new Float32Array(bgParticleCount * 3);
+        const bgColorArray = new Float32Array(bgParticleCount * 3);
+        
+        for(let i = 0; i < bgParticleCount * 3; i++) {
+            bgPosArray[i] = (Math.random() - 0.5) * 20;
+            bgColorArray[i] = Math.random() * 0.5 + 0.5; // Brighter colors
+        }
+        
+        bgParticlesGeometry.setAttribute(
+            'position',
+            new THREE.BufferAttribute(bgPosArray, 3)
+        );
+        
+        bgParticlesGeometry.setAttribute(
+            'color',
+            new THREE.BufferAttribute(bgColorArray, 3)
+        );
+        
+        const bgParticlesMaterial = new THREE.PointsMaterial({
+            size: 0.05,
+            vertexColors: true,
+            transparent: true,
+            opacity: 1,
+            blending: THREE.AdditiveBlending
+        });
+        
+        const bgParticleMesh = new THREE.Points(bgParticlesGeometry, bgParticlesMaterial);
+        bgScene.add(bgParticleMesh);
+        
+        // Create a wireframe sphere for background
+        const bgSphereGeometry = new THREE.SphereGeometry(1.5, 16, 16);
+        const bgSphereMaterial = new THREE.MeshBasicMaterial({ 
+            color: 0x12f7ff,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.1,
+        });
+        const bgSphere = new THREE.Mesh(bgSphereGeometry, bgSphereMaterial);
+        bgScene.add(bgSphere);
+        
+        // Animation loop for background
+        function bgAnimate() {
+            requestAnimationFrame(bgAnimate);
+            
+            bgSphere.rotation.x += 0.001;
+            bgSphere.rotation.y += 0.001;
+            
+            bgParticleMesh.rotation.x += 0.0002;
+            bgParticleMesh.rotation.y += 0.0003;
+            
+            bgRenderer.render(bgScene, bgCamera);
+        }
+        
+        bgAnimate();
+        
+        // Handle window resize for background
+        window.addEventListener('resize', () => {
+            bgCamera.aspect = window.innerWidth / window.innerHeight;
+            bgCamera.updateProjectionMatrix();
+            bgRenderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Project hover effect enhancement
+        document.querySelectorAll('.project-box').forEach(project => {
+            project.addEventListener('mouseenter', () => {
+                const img = project.querySelector('.project-img img');
+                img.style.transform = 'scale(1.05)';
+                project.style.boxShadow = '0 0 50px rgba(18, 247, 255, 0.3)';
+            });
+            
+            project.addEventListener('mouseleave', () => {
+                const img = project.querySelector('.project-img img');
+                img.style.transform = 'scale(1)';
+                project.style.boxShadow = '0 0 30px rgba(18, 247, 255, 0.1)';
+            });
+        });
+
+        // Prevent zooming on mobile devices
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+
+        // Add to home screen prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Stash the event so it can be triggered later
+            deferredPrompt = e;
+            // Update UI notify the user they can install the PWA
+            console.log("PWA installation available");
+        });
+    </script>
+</body>
+</html>

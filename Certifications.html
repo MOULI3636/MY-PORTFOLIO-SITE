@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Mouli Banerjee - Certifications</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            list-style: none;
+            scroll-behavior: smooth;
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --text-color: #f5f5f5;
+            --hover-color: #12f7ff;
+            --bg-color: #250821;
+            --secon-bg-color: #292e33;
+            --big-font: 2.5rem;
+            --normal-font: 2rem;
+            --neon-box-shadow: 0 0 .5rem #12f7ff;
+            --h2-font: 3rem;
+            --font-neon-text-shadow: 0 0 10px rgba(18, 247, 255, 0.3),
+            0 0 20px rgba(18, 247, 255, 0.3),
+            0 0 30px rgba(18, 247, 255, 0.3),
+            0 0 40px rgba(18, 247, 255, 0.3),
+            0 0 70px rgba(18, 247, 255, 0.3),
+            0 0 80px rgba(18, 247, 255, 0.3),
+            0 0 100px rgba(18, 247, 255, 0.3),
+            0 0 150px rgba(18, 247, 255, 0.3);
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+
+        .threejs-visualization {
+            touch-action: none;
+        }
+        /* Three.js Background */
+        #threejs-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 20px 10%;
+            background-color: rgba(37, 8, 33, 0.8);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(18, 247, 255, 0.1);
+        }
+
+        header.scrolled {
+            background-color: rgba(37, 8, 33, 0.95);
+            box-shadow: 0 5px 30px rgba(18, 247, 255, 0.1);
+            padding: 15px 10%;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, #12f7ff, #bafcff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(18, 247, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 20px rgba(18, 247, 255, 0.6);
+        }
+
+        span {
+            color: var(--hover-color);
+        }
+
+        .navlist {
+            display: flex;
+        }
+
+        .navlist a {
+            color: var(--text-color);
+            font-weight: 500;
+            padding: 10px 20px;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+            position: relative;
+            border-radius: 5px;
+        }
+
+        .navlist a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--hover-color);
+            transition: width 0.3s ease;
+        }
+
+        .navlist a:hover {
+            color: var(--hover-color);
+            text-shadow: var(--font-neon-text-shadow);
+        }
+
+        .navlist a:hover::before {
+            width: 80%;
+        }
+
+        #menu-icon {
+            font-size: 1.8rem;
+            z-index: 10001;
+            cursor: pointer;
+            margin-left: 25px;
+            background: var(--hover-color);
+            border-radius: 3px;
+            color: var(--secon-bg-color);
+            display: none;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+        }
+
+        #menu-icon:hover {
+            box-shadow: var(--neon-box-shadow);
+            transform: scale(1.05);
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 150px 10% 100px;
+            position: relative;
+        }
+
+        /* Certifications Section */
+        .certifications {
+            background-color: rgba(26, 26, 46, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 5%;
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            margin: 50px 0;
+            border: 1px solid rgba(18, 247, 255, 0.1);
+            box-shadow: 0 0 30px rgba(18, 247, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: var(--h2-font);
+            margin-bottom: 50px;
+            text-align: center;
+            color: var(--hover-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--hover-color);
+            box-shadow: 0 0 10px var(--hover-color);
+        }
+
+        .certifications-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            width: 100%;
+            max-width: 1400px;
+            align-items: center;
+        }
+
+        .certifications-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            height: 100%;
+            overflow-y: auto;
+            max-height: 600px;
+            padding-right: 15px;
+        }
+
+        /* Scrollbar styling */
+        .certifications-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .certifications-list::-webkit-scrollbar-track {
+            background: rgba(18, 247, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .certifications-list::-webkit-scrollbar-thumb {
+            background: var(--hover-color);
+            border-radius: 10px;
+        }
+
+        .certification-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 3px solid var(--hover-color);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .certification-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(18, 247, 255, 0.2);
+            border-left: 3px solid #fff;
+        }
+
+        .certification-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--hover-color);
+        }
+
+        .certification-issuer {
+            font-size: 1rem;
+            color: #bdbdbd;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .certification-issuer i {
+            margin-right: 8px;
+            color: var(--hover-color);
+        }
+
+        .certification-date {
+            font-size: 0.9rem;
+            color: #bdbdbd;
+            margin-bottom: 10px;
+        }
+
+        .certification-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .skill-tag {
+            background: rgba(18, 247, 255, 0.1);
+            color: var(--hover-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(18, 247, 255, 0.3);
+        }
+
+        .threejs-visualization {
+            height: 600px;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(18, 247, 255, 0.2);
+            width: 100%;
+            touch-action: none;
+        }
+
+        #certifications-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(15, 15, 35, 0.8);
+            color: #bdbdbd;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .certifications-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .threejs-visualization {
+                height: 500px;
+                order: -1;
+            }
+            
+            .certifications-list {
+                max-height: none;
+                overflow-y: visible;
+            }
+        }
+
+        @media (max-width: 991px) {
+            header {
+                padding: 15px 5%;
+            }
+            section {
+                padding: 150px 5% 100px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #menu-icon {
+                display: block;
+            }
+            .navlist {
+                position: absolute;
+                top: 100%;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 100px);
+                background: rgba(37, 8, 33, 0.95);
+                flex-direction: column;
+                align-items: center;
+                padding: 50px 0;
+                transition: .5s ease;
+                backdrop-filter: blur(10px);
+            }
+            .navlist.active {
+                left: 0;
+            }
+            .navlist a {
+                display: block;
+                margin: 15px 0;
+                font-size: 1.2rem;
+            }
+            
+            .threejs-visualization {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 2rem;
+            }
+            .certification-item {
+                padding: 15px;
+            }
+            .certification-title {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Three.js Background -->
+    <div id="threejs-bg"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo"><span>M</span>ouli.</div>
+        <ul class="navlist">
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="Skills.html">Skills</a></li>
+            <li><a href="Projects.html">Projects</a></li>
+            <li><a href="Experiences.html">Experiences</a></li>
+            <li><a href="Certifications.html">Certifications</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div id="menu-icon" class="bx bx-menu"></div>
+    </header>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="certifications">
+        <h2 class="section-title">My Certifications</h2>
+        
+        <div class="certifications-container">
+            <div class="certifications-list">
+                <!-- Programming Certifications -->
+                <div class="certification-item">
+                    <h3 class="certification-title">Programming Fundamentals (C, C++, Java, DSA)</h3>
+                    <div class="certification-issuer"><i class="fas fa-certificate"></i> NeoColab</div>
+                    <div class="certification-date">Completed: 2024</div>
+                    <div class="certification-skills">
+                        <span class="skill-tag">C Programming</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">Data Structures & Algorithms</span>
+                    </div>
+                </div>
+                
+                <!-- Excel Certifications -->
+                <div class="certification-item">
+                    <h3 class="certification-title">Microsoft Excel - Excel from Beginner to Advanced</h3>
+                    <div class="certification-issuer"><i class="fas fa-certificate"></i> Udemy</div>
+                    <div class="certification-date">Completed: 2025</div>
+                    <div class="certification-skills">
+                        <span class="skill-tag">Excel</span>
+                        <span class="skill-tag">Data Analysis</span>
+                        <span class="skill-tag">Pivot Tables</span>
+                        <span class="skill-tag">VBA</span>
+                    </div>
+                </div>
+                
+                <!-- Computer Network -->
+                <div class="certification-item">
+                    <h3 class="certification-title">Computer Networking</h3>
+                    <div class="certification-issuer"><i class="fas fa-certificate"></i> Coursera</div>
+                    <div class="certification-date">Completed: 2024</div>
+                    <div class="certification-skills">
+                        <span class="skill-tag">Networking</span>
+                        <span class="skill-tag">TCP/IP</span>
+                        <span class="skill-tag">OSI Model</span>
+                        <span class="skill-tag">Network Security</span>
+                    </div>
+                </div>
+                
+                <!-- Computer Organization -->
+                <div class="certification-item">
+                    <h3 class="certification-title">Computer Organization</h3>
+                    <div class="certification-issuer"><i class="fas fa-certificate"></i> Coursera</div>
+                    <div class="certification-date">Completed: 2024</div>
+                    <div class="certification-skills">
+                        <span class="skill-tag">Computer Architecture</span>
+                        <span class="skill-tag">Assembly</span>
+                        <span class="skill-tag">CPU Design</span>
+                        <span class="skill-tag">Memory Hierarchy</span>
+                    </div>
+                </div>
+                
+                <!-- Machine Learning -->
+                <div class="certification-item">
+                    <h3 class="certification-title">Machine Learning A-Z</h3>
+                    <div class="certification-issuer"><i class="fas fa-certificate"></i> Udemy</div>
+                    <div class="certification-date">Completed: 2024</div>
+                    <div class="certification-skills">
+                        <span class="skill-tag">Machine Learning</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Data Science</span>
+                        <span class="skill-tag">AI</span>
+                    </div>
+                </div>
+                
+                <!-- Full Stack Development -->
+                <div class="certification-item">
+                    <h3 class="certification-title">Full Stack Web Development</h3>
+                    <div class="certification-issuer"><i class="fas fa-certificate"></i> Apna College</div>
+                    <div class="certification-date">Completed: 2024</div>
+                    <div class="certification-skills">
+                        <span class="skill-tag">HTML/CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">MongoDB</span>
+                    </div>
+                </div>
+                
+                <!-- Data Science with ML -->
+                <div class="certification-item">
+                    <h3 class="certification-title">Data Science with ML Algorithms</h3>
+                    <div class="certification-issuer"><i class="fas fa-certificate"></i> Cipher School</div>
+                    <div class="certification-date">Completed: 2025</div>
+                    <div class="certification-skills">
+                        <span class="skill-tag">Data Science</span>
+                        <span class="skill-tag">ML Algorithms</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Pandas</span>
+                        <span class="skill-tag">NumPy</span>
+                    </div>
+                </div>
+                
+                <!-- Hackathons -->
+                <div class="certification-item">
+                    <h3 class="certification-title">Hackathon Participation Certificates</h3>
+                    <div class="certification-issuer"><i class="fas fa-trophy"></i> Various Organization</div>
+                    <div class="certification-date">2023-2025</div>
+                    <div class="certification-skills">
+                        <span class="skill-tag">Web-a-Thon</span>
+                        <span class="skill-tag">GNA Hackathon 3.0</span>
+                        <span class="skill-tag">Build-a-Thon</span>
+                        <span class="skill-tag">Code-a-Haunt</span>
+                        <span class="skill-tag">RCS Capture The Flag</span>
+                    </div>
+                </div>
+                
+                <!-- DBMS -->
+                <div class="certification-item">
+                    <h3 class="certification-title">Database Management Systems</h3>
+                    <div class="certification-issuer"><i class="fas fa-certificate"></i> E-Box</div>
+                    <div class="certification-date">Completed: 2024</div>
+                    <div class="certification-skills">
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">Database Design</span>
+                        <span class="skill-tag">Normalization</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="threejs-visualization">
+                <canvas id="certifications-canvas"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; Mouli Banerjee | Creating smarter technology for a brighter tomorrow.</p>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuIcon = document.getElementById('menu-icon');
+        const navlist = document.querySelector('.navlist');
+
+        menuIcon.addEventListener('click', () => {
+            navlist.classList.toggle('active');
+            menuIcon.classList.toggle('bx-x');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.navlist a').forEach(link => {
+            link.addEventListener('click', () => {
+                navlist.classList.remove('active');
+                menuIcon.classList.remove('bx-x');
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 100);
+        });
+
+        // Three.js Background Animation
+        const bgContainer = document.getElementById('threejs-bg');
+        
+        // Scene setup
+        const bgScene = new THREE.Scene();
+        
+        // Camera setup
+        const bgCamera = new THREE.PerspectiveCamera(
+            75, 
+            window.innerWidth / window.innerHeight, 
+            0.1, 
+            1000
+        );
+        bgCamera.position.z = 5;
+        
+        // Renderer setup
+        const bgRenderer = new THREE.WebGLRenderer({ 
+            alpha: true,
+            antialias: true 
+        });
+        bgRenderer.setSize(window.innerWidth, window.innerHeight);
+        bgRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for mobile
+        bgContainer.appendChild(bgRenderer.domElement);
+        
+        // Create particles for background
+        const bgParticlesGeometry = new THREE.BufferGeometry();
+        const bgParticleCount = 1000; // Reduced for mobile performance
+        
+        const bgPosArray = new Float32Array(bgParticleCount * 3);
+        const bgColorArray = new Float32Array(bgParticleCount * 3);
+        
+        for(let i = 0; i < bgParticleCount * 3; i++) {
+            bgPosArray[i] = (Math.random() - 0.5) * 20;
+            bgColorArray[i] = Math.random() * 0.5 + 0.5; // Brighter colors
+        }
+        
+        bgParticlesGeometry.setAttribute(
+            'position',
+            new THREE.BufferAttribute(bgPosArray, 3)
+        );
+        
+        bgParticlesGeometry.setAttribute(
+            'color',
+            new THREE.BufferAttribute(bgColorArray, 3)
+        );
+        
+        const bgParticlesMaterial = new THREE.PointsMaterial({
+            size: 0.05,
+            vertexColors: true,
+            transparent: true,
+            opacity: 1,
+            blending: THREE.AdditiveBlending
+        });
+        
+        const bgParticleMesh = new THREE.Points(bgParticlesGeometry, bgParticlesMaterial);
+        bgScene.add(bgParticleMesh);
+        
+        // Create a wireframe sphere for background
+        const bgSphereGeometry = new THREE.SphereGeometry(1.5, 12, 12); // Reduced detail for mobile
+        const bgSphereMaterial = new THREE.MeshBasicMaterial({ 
+            color: 0x12f7ff,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.1,
+        });
+        const bgSphere = new THREE.Mesh(bgSphereGeometry, bgSphereMaterial);
+        bgScene.add(bgSphere);
+        
+        // Animation loop for background
+        function bgAnimate() {
+            requestAnimationFrame(bgAnimate);
+            
+            bgSphere.rotation.x += 0.001;
+            bgSphere.rotation.y += 0.001;
+            
+            bgParticleMesh.rotation.x += 0.0002;
+            bgParticleMesh.rotation.y += 0.0003;
+            
+            bgRenderer.render(bgScene, bgCamera);
+        }
+        
+        bgAnimate();
+        
+        // Handle window resize for background
+        function handleBgResize() {
+            bgCamera.aspect = window.innerWidth / window.innerHeight;
+            bgCamera.updateProjectionMatrix();
+            bgRenderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        
+        window.addEventListener('resize', handleBgResize);
+
+        // Three.js Visualization for Certifications
+        const threejsContainer = document.querySelector('.threejs-visualization');
+        const canvas = document.getElementById('certifications-canvas');
+
+        // Scene setup
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x1a1a2e);
+        
+        // Camera setup
+        const camera = new THREE.PerspectiveCamera(
+            75, 
+            threejsContainer.clientWidth / threejsContainer.clientHeight, 
+            0.1, 
+            1000
+        );
+        camera.position.z = 8;
+        
+        // Renderer setup
+        const renderer = new THREE.WebGLRenderer({ 
+            canvas: canvas,
+            antialias: true,
+            alpha: true
+        });
+        renderer.setSize(threejsContainer.clientWidth, threejsContainer.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for mobile
+        
+        // Controls
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.enableZoom = true;
+        controls.minDistance = 5;
+        controls.maxDistance = 15;
+        controls.enablePan = false; // Disable panning for mobile
+        
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+        scene.add(ambientLight);
+        
+        const directionalLight1 = new THREE.DirectionalLight(0x12f7ff, 1);
+        directionalLight1.position.set(1, 1, 1);
+        scene.add(directionalLight1);
+        
+        const directionalLight2 = new THREE.DirectionalLight(0xff00ff, 0.5);
+        directionalLight2.position.set(-1, -1, -1);
+        scene.add(directionalLight2);
+        
+        // Create a central sphere representing you
+        const centralSphereGeometry = new THREE.SphereGeometry(1, 24, 24); // Reduced detail for mobile
+        const centralSphereMaterial = new THREE.MeshPhongMaterial({
+            color: 0x12f7ff,
+            emissive: 0x0a3d62,
+            specular: 0x12f7ff,
+            shininess: 30,
+            transparent: true,
+            opacity: 0.9,
+            wireframe: false
+        });
+        const centralSphere = new THREE.Mesh(centralSphereGeometry, centralSphereMaterial);
+        scene.add(centralSphere);
+        
+        // Create orbiting certificates (smaller spheres)
+        const certificateSpheres = [];
+        const certificateCount = 9; // Matching your 9 certifications
+        const orbitRadius = 3;
+        
+        // Create a group to hold all certificate spheres
+        const certificatesGroup = new THREE.Group();
+        scene.add(certificatesGroup);
+        
+        // Create certificate spheres with different colors
+        const colors = [
+            0xff5733, 0x33ff57, 0x3357ff, 0xf033ff, 0xfff033,
+            0x33fff0, 0xff33a8, 0xa833ff, 0x33ffa8
+        ];
+        
+        for (let i = 0; i < certificateCount; i++) {
+            const geometry = new THREE.SphereGeometry(0.4, 12, 12); // Reduced detail for mobile
+            const material = new THREE.MeshPhongMaterial({
+                color: colors[i],
+                emissive: colors[i],
+                emissiveIntensity: 0.2,
+                specular: 0xffffff,
+                shininess: 50,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const sphere = new THREE.Mesh(geometry, material);
+            
+            // Position spheres in a circular orbit
+            const angle = (i / certificateCount) * Math.PI * 2;
+            sphere.position.x = Math.cos(angle) * orbitRadius;
+            sphere.position.y = Math.sin(angle) * orbitRadius * 0.5;
+            sphere.position.z = Math.sin(angle) * orbitRadius * 0.7;
+            
+            // Add slight random offset for more organic look
+            sphere.position.x += (Math.random() - 0.5) * 0.5;
+            sphere.position.y += (Math.random() - 0.5) * 0.5;
+            sphere.position.z += (Math.random() - 0.5) * 0.5;
+            
+            // Store original position for animation
+            sphere.userData = {
+                originalX: sphere.position.x,
+                originalY: sphere.position.y,
+                originalZ: sphere.position.z,
+                angle: angle,
+                speed: 0.5 + Math.random() * 0.5
+            };
+            
+            certificatesGroup.add(sphere);
+            certificateSpheres.push(sphere);
+            
+            // Add connecting lines between central sphere and certificates
+            const lineGeometry = new THREE.BufferGeometry().setFromPoints([
+                new THREE.Vector3(0, 0, 0),
+                new THREE.Vector3(sphere.position.x, sphere.position.y, sphere.position.z)
+            ]);
+            const lineMaterial = new THREE.LineBasicMaterial({
+                color: 0x12f7ff,
+                transparent: true,
+                opacity: 0.3
+            });
+            const line = new THREE.Line(lineGeometry, lineMaterial);
+            scene.add(line);
+        }
+        
+        // Add floating particles (reduced count for mobile)
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 500;
+        const particlesPosArray = new Float32Array(particlesCount * 3);
+        
+        for(let i = 0; i < particlesCount * 3; i++) {
+            particlesPosArray[i] = (Math.random() - 0.5) * 20;
+        }
+        
+        particlesGeometry.setAttribute(
+            'position',
+            new THREE.BufferAttribute(particlesPosArray, 3)
+        );
+        
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.03,
+            color: 0x12f7ff,
+            transparent: true,
+            opacity: 0.5,
+            blending: THREE.AdditiveBlending
+        });
+        
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+        
+        // Animation variables
+        let time = 0;
+        
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            time += 0.01;
+            
+            // Rotate central sphere
+            centralSphere.rotation.x += 0.005;
+            centralSphere.rotation.y += 0.005;
+            
+            // Animate certificate spheres
+            certificateSpheres.forEach((sphere, index) => {
+                const { originalX, originalY, originalZ, angle, speed } = sphere.userData;
+                
+                // Add subtle floating animation
+                sphere.position.x = originalX + Math.sin(time * speed) * 0.2;
+                sphere.position.y = originalY + Math.cos(time * speed * 0.7) * 0.2;
+                sphere.position.z = originalZ + Math.sin(time * speed * 0.5) * 0.2;
+                
+                // Rotate each sphere
+                sphere.rotation.x += 0.01;
+                sphere.rotation.y += 0.01;
+            });
+            
+            // Rotate the entire certificates group
+            certificatesGroup.rotation.y += 0.002;
+            
+            // Rotate particles
+            particlesMesh.rotation.x += 0.0005;
+            particlesMesh.rotation.y += 0.0005;
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+        
+        // Handle window resize
+        function handleResize() {
+            camera.aspect = threejsContainer.clientWidth / threejsContainer.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(threejsContainer.clientWidth, threejsContainer.clientHeight);
+        }
+        
+        window.addEventListener('resize', handleResize);
+
+        // Add hover effects to certification items
+        const certificationItems = document.querySelectorAll('.certification-item');
+        
+        certificationItems.forEach((item, index) => {
+            item.addEventListener('mouseenter', () => {
+                // Highlight corresponding sphere in Three.js scene
+                if (certificateSpheres[index]) {
+                    certificateSpheres[index].material.color.setHex(0xffffff);
+                    certificateSpheres[index].material.emissive.setHex(0xffffff);
+                    certificateSpheres[index].scale.set(1.2, 1.2, 1.2);
+                }
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                // Restore original color
+                if (certificateSpheres[index]) {
+                    certificateSpheres[index].material.color.setHex(colors[index]);
+                    certificateSpheres[index].material.emissive.setHex(colors[index]);
+                    certificateSpheres[index].scale.set(1, 1, 1);
+                }
+            });
+            
+            // For touch devices
+            item.addEventListener('touchstart', () => {
+                if (certificateSpheres[index]) {
+                    certificateSpheres[index].material.color.setHex(0xffffff);
+                    certificateSpheres[index].material.emissive.setHex(0xffffff);
+                    certificateSpheres[index].scale.set(1.2, 1.2, 1.2);
+                }
+            });
+            
+            item.addEventListener('touchend', () => {
+                if (certificateSpheres[index]) {
+                    certificateSpheres[index].material.color.setHex(colors[index]);
+                    certificateSpheres[index].material.emissive.setHex(colors[index]);
+                    certificateSpheres[index].scale.set(1, 1, 1);
+                }
+            });
+        });
+        
+        // Initialize Three.js after page load for better mobile performance
+        window.addEventListener('load', () => {
+            handleBgResize();
+            handleResize();
+        });
+        // For touch devices
+        item.addEventListener('touchstart', () => {
+        // Highlight sphere
+        });
+        item.addEventListener('touchend', () => {
+        // Restore sphere
+        });
+    </script>
+</body>
+</html>

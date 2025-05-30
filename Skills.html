@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mouli Banerjee - Skills</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            list-style: none;
+            scroll-behavior: smooth;
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --text-color: black;
+            --hover-color: #12f7ff;
+            --bg-color: #250821;
+            --secon-bg-color: #292e33;
+            --big-font: 2.5rem;
+            --normal-font: 2rem;
+            --neon-box-shadow: 0 0 .5rem #12f7ff;
+            --h2-font: 3rem;
+            --font-neon-text-shadow: 0 0 10px rgba(18, 247, 255, 0.3),
+            0 0 20px rgba(18, 247, 255, 0.3),
+            0 0 30px rgba(18, 247, 255, 0.3),
+            0 0 40px rgba(18, 247, 255, 0.3),
+            0 0 70px rgba(18, 247, 255, 0.3),
+            0 0 80px rgba(18, 247, 255, 0.3),
+            0 0 100px rgba(18, 247, 255, 0.3),
+            0 0 150px rgba(18, 247, 255, 0.3);
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+
+        /* Three.js Background */
+        #threejs-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+            touch-action: none;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 20px 10%;
+            background-color: rgba(37, 8, 33, 0.8);
+            backdrop-filter: blur(10px);
+            transition: all 0.8s ease;
+            border-bottom: 1px solid rgba(18, 247, 255, 0.1);
+        }
+
+        header.scrolled {
+            background-color: rgba(37, 8, 33, 0.95);
+            box-shadow: 0 5px 30px rgba(18, 247, 255, 0.1);
+            padding: 15px 10%;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, #12f7ff, #bafcff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(18, 247, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 20px rgba(18, 247, 255, 0.6);
+        }
+
+        span {
+            color: var(--hover-color);
+        }
+
+        .navlist {
+            display: flex;
+        }
+
+        .navlist a {
+            color: #f5f5f5;
+            font-weight: 500;
+            padding: 10px 20px;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+            position: relative;
+            border-radius: 5px;
+        }
+
+        .navlist a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--hover-color);
+            transition: width 0.3s ease;
+        }
+
+        .navlist a:hover {
+            color: var(--hover-color);
+            text-shadow: var(--font-neon-text-shadow);
+        }
+
+        .navlist a:hover::before {
+            width: 80%;
+        }
+
+        #menu-icon {
+            font-size: 1.8rem;
+            z-index: 10001;
+            cursor: pointer;
+            margin-left: 25px;
+            background: var(--hover-color);
+            border-radius: 3px;
+            color: var(--secon-bg-color);
+            display: none;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+        }
+
+        #menu-icon:hover {
+            box-shadow: var(--neon-box-shadow);
+            transform: scale(1.05);
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 150px 10% 100px;
+            position: relative;
+        }
+
+        /* Skills Section */
+        .skills {
+            background-color: rgba(26, 26, 46, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 5%;
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            margin: 50px 0;
+            border: 1px solid rgba(18, 247, 255, 0.1);
+            box-shadow: 0 0 30px rgba(18, 247, 255, 0.1);
+        }
+
+        .skills-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .skills-header h2 {
+            font-size: var(--h2-font);
+            margin-bottom: 15px;
+            color: var(--hover-color);
+        }
+
+        .skills-header p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #bdbdbd;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 1s ease;
+            position: relative;
+            overflow: hidden;
+            border: 5px solid rgba(19, 229, 236, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(18, 247, 255, 0.2);
+            border-color: rgba(18, 247, 255, 0.3);
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(18, 247, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+
+        .skill-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            color: var(--hover-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .skill-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--hover-color);
+            text-align: center;
+        }
+
+        .skill-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .skill-item {
+            background: rgba(18, 247, 255, 0.1);
+            color: var(--hover-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(18, 247, 255, 0.2);
+        }
+
+        .skill-description {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: rgba(18, 247, 255, 0.9);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 0 30px;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            overflow: hidden;
+            opacity: 0;
+        }
+
+        .skill-card:hover .skill-description {
+            height: 100%;
+            opacity: 1;
+        }
+
+        .skill-description p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .skill-description .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--bg-color);
+            color: var(--hover-color);
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid var(--bg-color);
+        }
+
+        .skill-description .btn:hover {
+            background: transparent;
+            border-color: var(--bg-color);
+            color: var(--bg-color);
+        }
+
+        /* Three.js Container */
+        .threejs-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 1;
+            touch-action: none;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(15, 15, 35, 0.8);
+            color: #bdbdbd;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 991px) {
+            header {
+                padding: 15px 5%;
+            }
+            section {
+                padding: 150px 5% 100px;
+            }
+            .skills {
+                padding: 80px 5%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #menu-icon {
+                display: block;
+            }
+            .navlist {
+                position: absolute;
+                top: 100%;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 100px);
+                background: rgba(37, 8, 33, 0.95);
+                flex-direction: column;
+                align-items: center;
+                padding: 50px 0;
+                transition: .5s ease;
+                backdrop-filter: blur(10px);
+            }
+            .navlist.active {
+                left: 0;
+            }
+            .navlist a {
+                display: block;
+                margin: 15px 0;
+                font-size: 1.2rem;
+            }
+            
+            /* Adjust skill cards for mobile */
+            .skill-card {
+                padding: 20px;
+            }
+            
+            /* Reduce animation intensity for mobile */
+            #threejs-bg, .threejs-container {
+                opacity: 0.3;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .skill-card {
+                padding: 15px;
+            }
+            
+            .skill-title {
+                font-size: 1.3rem;
+            }
+            
+            .skill-items {
+                gap: 8px;
+            }
+            
+            .skill-item {
+                padding: 4px 12px;
+                font-size: 0.8rem;
+            }
+            
+            /* Further reduce animation for small devices */
+            #threejs-bg, .threejs-container {
+                opacity: 0.2;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Three.js Background -->
+    <div id="threejs-bg"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo"><span>M</span>ouli.</div>
+        <ul class="navlist">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="skills.html">Skills</a></li>
+            <li><a href="Projects.html">Projects</a></li>
+            <li><a href="Experiences.html">Experience</a></li>
+            <li><a href="Certifications.html">Certifications</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div id="menu-icon" class="bx bx-menu"></div>
+    </header>
+
+    <!-- Skills Section -->
+    <section class="skills">
+        <div class="threejs-container" id="skills-animation"></div>
+        
+        <div class="skills-header">
+            <h2>My <span>Skills</span></h2>
+            <p>A quick glance at my core technical skills and specialties. Hover on each card to see where my strengths truly shine.</p>
+        </div>
+        
+        <div class="skills-container">
+            <!-- Programming Languages -->
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3 class="skill-title">Programming Languages</h3>
+                <div class="skill-items">
+                    <span class="skill-item">C</span>
+                    <span class="skill-item">C++</span>
+                    <span class="skill-item">Python</span>
+                    <span class="skill-item">Java</span>
+                </div>
+                <div class="skill-description">
+                    <p>I have strong foundational knowledge in multiple programming languages, enabling me to solve complex problems efficiently. I can develop algorithms, data structures, and system-level applications.</p>
+                    <a href="#" class="btn">View Projects</a>
+                </div>
+            </div>
+            
+            <!-- Frontend Development -->
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3 class="skill-title">Frontend Development</h3>
+                <div class="skill-items">
+                    <span class="skill-item">HTML5</span>
+                    <span class="skill-item">CSS3</span>
+                    <span class="skill-item">JavaScript</span>
+                    <span class="skill-item">Responsive Design</span>
+                </div>
+                <div class="skill-description">
+                    <p>I create beautiful, responsive, and user-friendly interfaces with modern web technologies. I focus on performance, accessibility, and cross-browser compatibility.</p>
+                    <a href="#" class="btn">View Projects</a>
+                </div>
+            </div>
+            
+            <!-- Backend Development -->
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-server"></i>
+                </div>
+                <h3 class="skill-title">Backend Development</h3>
+                <div class="skill-items">
+                    <span class="skill-item">Node.js</span>
+                    <span class="skill-item">React</span>
+                    <span class="skill-item">MongoDB</span>
+                    <span class="skill-item">REST APIs</span>
+                </div>
+                <div class="skill-description">
+                    <p>I build scalable server-side applications, design databases, and create efficient APIs. My solutions ensure data security, performance, and seamless integration with frontend.</p>
+                    <a href="#" class="btn">View Projects</a>
+                </div>
+            </div>
+            
+            <!-- DevOps -->
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <h3 class="skill-title">DevOps & Cloud</h3>
+                <div class="skill-items">
+                    <span class="skill-item">Kubernetes</span>
+                    <span class="skill-item">Docker</span>
+                    <span class="skill-item">Linux</span>
+                    <span class="skill-item">CI/CD</span>
+                </div>
+                <div class="skill-description">
+                    <p>I implement DevOps practices to automate deployment, scaling, and management of containerized applications. I can set up efficient development pipelines and cloud infrastructure.</p>
+                    <a href="#" class="btn">View Projects</a>
+                </div>
+            </div>
+            
+            <!-- Android Development -->
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3 class="skill-title">Android Development</h3>
+                <div class="skill-items">
+                    <span class="skill-item">Java</span>
+                    <span class="skill-item">Kotlin</span>
+                    <span class="skill-item">Flutter</span>
+                    <span class="skill-item">Firebase</span>
+                </div>
+                <div class="skill-description">
+                    <p>I develop native and cross-platform mobile applications with focus on performance, usability, and modern design patterns. I'm currently expanding my Flutter expertise.</p>
+                    <a href="#" class="btn">View Projects</a>
+                </div>
+            </div>
+            
+            <!-- Data Science & AI -->
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="skill-title">Data Science & AI</h3>
+                <div class="skill-items">
+                    <span class="skill-item">Machine Learning</span>
+                    <span class="skill-item">Deep Learning</span>
+                    <span class="skill-item">Data Analysis</span>
+                    <span class="skill-item">Tableau</span>
+                </div>
+                <div class="skill-description">
+                    <p>I build predictive models, analyze complex datasets, and create insightful visualizations. My expertise includes supervised, unsupervised, and reinforcement learning techniques.</p>
+                    <a href="#" class="btn">View Projects</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; Mouli Banerjee | Creating smarter technology for a brighter tomorrow.</p>
+    </footer>
+
+<script>
+    // Three.js Background Animation - Enhanced Professional Version
+    const bgContainer = document.getElementById('threejs-bg');
+    
+    // Scene setup
+    const bgScene = new THREE.Scene();
+    
+    // Camera setup
+    const bgCamera = new THREE.PerspectiveCamera(
+        75, 
+        window.innerWidth / window.innerHeight, 
+        0.1, 
+        1000
+    );
+    bgCamera.position.z = 5;
+    
+    // Renderer setup
+    const bgRenderer = new THREE.WebGLRenderer({ 
+        alpha: true,
+        antialias: true 
+    });
+    bgRenderer.setSize(window.innerWidth, window.innerHeight);
+    bgRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for mobile
+    bgContainer.appendChild(bgRenderer.domElement);
+    
+    // Create a network of interconnected nodes representing skills
+    const nodes = [];
+    const nodeCount = 12;
+    const nodeGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+    
+    // Different colors for different skill categories
+    const nodeColors = [
+        0x12f7ff, // Programming
+        0x4dff4d, // Frontend
+        0xff6b6b, // Backend
+        0xffcc5c, // DevOps
+        0x9d65ff, // Android
+        0xff6bff  // Data Science
+    ];
+    
+    // Create nodes
+    for (let i = 0; i < nodeCount; i++) {
+        const colorIndex = Math.floor(i / (nodeCount / nodeColors.length));
+        const nodeMaterial = new THREE.MeshBasicMaterial({
+            color: nodeColors[colorIndex],
+            transparent: true,
+            opacity: 0.8
+        });
+        
+        const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+        
+        // Position nodes in a 3D sphere
+        const radius = 3;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos((2 * Math.random()) - 1);
+        
+        node.position.x = radius * Math.sin(phi) * Math.cos(theta);
+        node.position.y = radius * Math.sin(phi) * Math.sin(theta);
+        node.position.z = radius * Math.cos(phi);
+        
+        node.userData = {
+            originalPosition: node.position.clone(),
+            speed: 0.001 + Math.random() * 0.003
+        };
+        
+        bgScene.add(node);
+        nodes.push(node);
+    }
+    
+    // Create connections between nodes
+    const lineMaterial = new THREE.LineBasicMaterial({
+        color: 0x12f7ff,
+        transparent: true,
+        opacity: 0.4
+    });
+    
+    const connections = [];
+    for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+            // Connect nodes with some probability
+            if (Math.random() > 0.7) {
+                const geometry = new THREE.BufferGeometry().setFromPoints([
+                    nodes[i].position,
+                    nodes[j].position
+                ]);
+                const line = new THREE.Line(geometry, lineMaterial);
+                bgScene.add(line);
+                connections.push({
+                    line: line,
+                    from: nodes[i],
+                    to: nodes[j]
+                });
+            }
+        }
+    }
+    
+    // Add floating skill icons in the background
+    const skillIcons = ['</>', '{ }', '</>', 'DB', 'CLD', 'AI'];
+    const iconTexts = [];
+    
+    skillIcons.forEach((icon, index) => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 128;
+        canvas.height = 128;
+        const context = canvas.getContext('2d');
+        
+        context.font = 'Bold 60px Arial';
+        context.fillStyle = `rgba(${nodeColors[index].toString(16)}, 0.8)`;
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillText(icon, 64, 64);
+        
+        const texture = new THREE.CanvasTexture(canvas);
+        const material = new THREE.SpriteMaterial({
+            map: texture,
+            transparent: true,
+            opacity: 0.5
+        });
+        
+        const sprite = new THREE.Sprite(material);
+        sprite.scale.set(1, 1, 1);
+        
+        // Position icons in a larger sphere
+        const radius = 6;
+        const theta = (index / skillIcons.length) * Math.PI * 2;
+        const phi = Math.acos((2 * (index / skillIcons.length)) - 1);
+        
+        sprite.position.x = radius * Math.sin(phi) * Math.cos(theta);
+        sprite.position.y = radius * Math.sin(phi) * Math.sin(theta);
+        sprite.position.z = radius * Math.cos(phi);
+        
+        bgScene.add(sprite);
+        iconTexts.push(sprite);
+    });
+    
+    // Animation loop for background
+    function bgAnimate() {
+        requestAnimationFrame(bgAnimate);
+        
+        // Animate nodes
+        nodes.forEach(node => {
+            // Gentle floating motion
+            node.position.x = node.userData.originalPosition.x + Math.sin(Date.now() * node.userData.speed) * 0.5;
+            node.position.y = node.userData.originalPosition.y + Math.cos(Date.now() * node.userData.speed * 1.3) * 0.5;
+            node.position.z = node.userData.originalPosition.z + Math.sin(Date.now() * node.userData.speed * 0.7) * 0.5;
+        });
+        
+        // Update connections
+        connections.forEach(conn => {
+            conn.line.geometry.dispose();
+            conn.line.geometry = new THREE.BufferGeometry().setFromPoints([
+                conn.from.position,
+                conn.to.position
+            ]);
+        });
+        
+        // Slowly rotate the camera for a dynamic view
+        bgCamera.position.x = Math.sin(Date.now() * 0.0005) * 5;
+        bgCamera.position.z = Math.cos(Date.now() * 0.0005) * 5;
+        bgCamera.lookAt(0, 0, 0);
+        
+        bgRenderer.render(bgScene, bgCamera);
+    }
+    
+    bgAnimate();
+    
+    // Handle window resize for background
+    function handleBgResize() {
+        bgCamera.aspect = window.innerWidth / window.innerHeight;
+        bgCamera.updateProjectionMatrix();
+        bgRenderer.setSize(window.innerWidth, window.innerHeight);
+    }
+    
+    window.addEventListener('resize', handleBgResize);
+    
+    // Handle mobile touch events to prevent scrolling when interacting with 3D
+    bgContainer.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+    
+    bgContainer.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 1) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // Three.js Animation for Skills Section - Enhanced Professional Version
+    const skillsContainer = document.getElementById('skills-animation');
+    
+    // Scene setup
+    const skillsScene = new THREE.Scene();
+    skillsScene.background = new THREE.Color(0x1a1a2e);
+    
+    // Camera setup
+    const skillsCamera = new THREE.PerspectiveCamera(
+        75, 
+        skillsContainer.clientWidth / skillsContainer.clientHeight, 
+        0.1, 
+        1000
+    );
+    skillsCamera.position.z = 8;
+    
+    // Renderer setup
+    const skillsRenderer = new THREE.WebGLRenderer({ 
+        alpha: true,
+        antialias: true 
+    });
+    skillsRenderer.setSize(skillsContainer.clientWidth, skillsContainer.clientHeight);
+    skillsRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for mobile
+    skillsContainer.appendChild(skillsRenderer.domElement);
+    
+    // Create skill category representations
+    const skillCategories = [
+        { name: "Programming", color: 0x12f7ff, icon: "</>" },
+        { name: "Frontend", color: 0x4dff4d, icon: "{ }" },
+        { name: "Backend", color: 0xff6b6b, icon: "</>" },
+        { name: "DevOps", color: 0xffcc5c, icon: "DB" },
+        { name: "Android", color: 0x9d65ff, icon: "CLD" },
+        { name: "Data Science", color: 0xff6bff, icon: "AI" }
+    ];
+    
+    const skillObjects = [];
+    const radius = 3;
+    
+    // Create skill objects
+    skillCategories.forEach((category, index) => {
+        // Create 3D text for skill category
+        const canvas = document.createElement('canvas');
+        canvas.width = 256;
+        canvas.height = 128;
+        const context = canvas.getContext('2d');
+        
+        context.font = 'Bold 40px Arial';
+        context.fillStyle = `rgba(${(category.color >> 16) & 0xff}, ${(category.color >> 8) & 0xff}, ${category.color & 0xff}, 0.8)`;
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillText(category.icon, 128, 64);
+        
+        const texture = new THREE.CanvasTexture(canvas);
+        const material = new THREE.MeshBasicMaterial({
+            map: texture,
+            transparent: true,
+            side: THREE.DoubleSide
+        });
+        
+        const geometry = new THREE.PlaneGeometry(1.5, 0.75);
+        const textMesh = new THREE.Mesh(geometry, material);
+        
+        // Position in a circle
+        const angle = (index / skillCategories.length) * Math.PI * 2;
+        textMesh.position.x = Math.cos(angle) * radius;
+        textMesh.position.y = Math.sin(angle) * radius;
+        textMesh.position.z = (Math.random() - 0.5) * 2;
+        
+        textMesh.userData = {
+            originalPosition: textMesh.position.clone(),
+            speed: 0.002 + Math.random() * 0.003,
+            angle: angle
+        };
+        
+        skillsScene.add(textMesh);
+        skillObjects.push(textMesh);
+        
+        // Create a wireframe shape representing the skill category
+        let shapeGeometry;
+        switch(index % 4) {
+            case 0: shapeGeometry = new THREE.OctahedronGeometry(0.4); break;
+            case 1: shapeGeometry = new THREE.TorusGeometry(0.3, 0.1, 16, 32); break;
+            case 2: shapeGeometry = new THREE.IcosahedronGeometry(0.4); break;
+            case 3: shapeGeometry = new THREE.TorusKnotGeometry(0.3, 0.1, 100, 16); break;
+        }
+        
+        const shapeMaterial = new THREE.MeshBasicMaterial({
+            color: category.color,
+            wireframe: true,
+            transparent: true,
+            opacity: 1
+        });
+        
+        const shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
+        shape.position.copy(textMesh.position);
+        shape.position.z += 0.5;
+        shape.scale.set(0.8, 0.8, 0.8);
+        
+        skillsScene.add(shape);
+        skillObjects.push(shape);
+    });
+    
+    // Create connections between skill categories
+    const skillConnections = [];
+    const skillLineMaterial = new THREE.LineBasicMaterial({ 
+        color: 0x12f7ff,
+        transparent: true,
+        opacity: 0.4
+    });
+    
+    for (let i = 0; i < skillCategories.length; i++) {
+        const nextIndex = (i + 1) % skillCategories.length;
+        const geometry = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(
+                Math.cos(skillObjects[i*2].userData.angle) * radius,
+                Math.sin(skillObjects[i*2].userData.angle) * radius,
+                0
+            ),
+            new THREE.Vector3(
+                Math.cos(skillObjects[nextIndex*2].userData.angle) * radius,
+                Math.sin(skillObjects[nextIndex*2].userData.angle) * radius,
+                0
+            )
+        ]);
+        const line = new THREE.Line(geometry, skillLineMaterial);
+        skillsScene.add(line);
+        skillConnections.push(line);
+    }
+    
+    // Animation loop
+    function skillsAnimate() {
+        requestAnimationFrame(skillsAnimate);
+        
+        // Animate skill objects
+        skillObjects.forEach((obj, index) => {
+            if (index % 2 === 0) { // Text objects
+                // Float up and down
+                obj.position.y = obj.userData.originalPosition.y + Math.sin(Date.now() * obj.userData.speed) * 0.3;
+                
+                // Rotate to always face camera
+                obj.lookAt(skillsCamera.position);
+            } else { // Shape objects
+                obj.rotation.x += obj.userData.speed * 0.5;
+                obj.rotation.y += obj.userData.speed * 0.8;
+                obj.rotation.z += obj.userData.speed * 0.3;
+                
+                // Float in sync with text but opposite phase
+                obj.position.y = obj.userData.originalPosition.y + Math.cos(Date.now() * obj.userData.speed) * 0.3;
+            }
+        });
+        
+        // Slowly rotate the camera around the scene
+        skillsCamera.position.x = Math.sin(Date.now() * 0.0003) * 8;
+        skillsCamera.position.z = Math.cos(Date.now() * 0.0003) * 8;
+        skillsCamera.lookAt(0, 0, 0);
+        
+        skillsRenderer.render(skillsScene, skillsCamera);
+    }
+    
+    skillsAnimate();
+    
+    // Handle window resize
+    function handleSkillsResize() {
+        skillsCamera.aspect = skillsContainer.clientWidth / skillsContainer.clientHeight;
+        skillsCamera.updateProjectionMatrix();
+        skillsRenderer.setSize(skillsContainer.clientWidth, skillsContainer.clientHeight);
+    }
+    
+    window.addEventListener('resize', handleSkillsResize);
+    
+    // Mobile menu toggle
+    const menuIcon = document.getElementById('menu-icon');
+    const navlist = document.querySelector('.navlist');
+    
+    menuIcon.addEventListener('click', () => {
+        menuIcon.classList.toggle('bx-x');
+        navlist.classList.toggle('active');
+    });
+    
+    // Close menu when clicking on a link
+    document.querySelectorAll('.navlist a').forEach(link => {
+        link.addEventListener('click', () => {
+            menuIcon.classList.remove('bx-x');
+            navlist.classList.remove('active');
+        });
+    });
+    
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('header');
+        header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+    
+    // Initialize with header scrolled if page is not at top
+    if (window.scrollY > 50) {
+        document.querySelector('header').classList.add('scrolled');
+    }
+    
+    // Touch support for skill cards on mobile
+    document.querySelectorAll('.skill-card').forEach(card => {
+        let touchTimer;
+        
+        card.addEventListener('touchstart', () => {
+            touchTimer = setTimeout(() => {
+                card.classList.add('hover');
+            }, 300); // Long press for hover effect
+        }, { passive: true });
+        
+        card.addEventListener('touchend', () => {
+            clearTimeout(touchTimer);
+            card.classList.remove('hover');
+        }, { passive: true });
+        
+        // Also allow normal tap to toggle
+        card.addEventListener('click', () => {
+            card.classList.toggle('hover');
+        });
+    });
+</script>
+</body>
+</html>

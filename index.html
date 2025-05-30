@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mouli Banerjee - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            list-style: none;
+            scroll-behavior: smooth;
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --text-color: #f5f5f5;
+            --hover-color: #12f7ff;
+            --bg-color: #250821;
+            --secon-bg-color: #292e33;
+            --big-font: 2.5rem;
+            --normal-font: 2rem;
+            --neon-box-shadow: 0 0 .5rem #12f7ff;
+            --h2-font: 3rem;
+            --font-neon-text-shadow: 0 0 10px rgba(18, 247, 255, 0.3),
+            0 0 20px rgba(18, 247, 255, 0.3),
+            0 0 30px rgba(18, 247, 255, 0.3),
+            0 0 40px rgba(18, 247, 255, 0.3),
+            0 0 70px rgba(18, 247, 255, 0.3),
+            0 0 80px rgba(18, 247, 255, 0.3),
+            0 0 100px rgba(18, 247, 255, 0.3),
+            0 0 150px rgba(18, 247, 255, 0.3);
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+
+        /* Three.js Background */
+        #threejs-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 20px 10%;
+            background-color: rgba(37, 8, 33, 0.8);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(18, 247, 255, 0.1);
+        }
+
+        header.scrolled {
+            background-color: rgba(37, 8, 33, 0.95);
+            box-shadow: 0 5px 30px rgba(18, 247, 255, 0.1);
+            padding: 15px 10%;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, #12f7ff, #bafcff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(18, 247, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 20px rgba(18, 247, 255, 0.6);
+        }
+
+        span {
+            color: var(--hover-color);
+        }
+
+        .navlist {
+            display: flex;
+        }
+
+        .navlist a {
+            color: var(--text-color);
+            font-weight: 500;
+            padding: 10px 20px;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+            position: relative;
+            border-radius: 5px;
+        }
+
+        .navlist a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--hover-color);
+            transition: width 0.3s ease;
+        }
+
+        .navlist a:hover {
+            color: var(--hover-color);
+            text-shadow: var(--font-neon-text-shadow);
+        }
+
+        .navlist a:hover::before {
+            width: 80%;
+        }
+
+        #menu-icon {
+            font-size: 1.8rem;
+            z-index: 10001;
+            cursor: pointer;
+            margin-left: 25px;
+            background: var(--hover-color);
+            border-radius: 3px;
+            color: var(--secon-bg-color);
+            display: none;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+        }
+
+        #menu-icon:hover {
+            box-shadow: var(--neon-box-shadow);
+            transform: scale(1.05);
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 150px 10% 100px;
+            position: relative;
+        }
+
+        /* Home Section */
+        .home {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            align-items: center;
+            grid-gap: 4em;
+            height: 100vh;
+        }
+
+        .home-content {
+            max-width: 600px;
+        }
+
+        .home-content h1 {
+            font-size: var(--big-font);
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .change-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            height: 60px;
+            overflow: hidden;
+        }
+
+        .change-text h3 {
+            display: inline-flex;
+            margin: 0;
+            vertical-align: top;
+            position: relative;
+        }
+
+        .change-text h3 .word {
+            position: absolute;
+            display: flex;
+            opacity: 0;
+            left: 0;
+        }
+
+        .change-text h3 .word .letter {
+            transform-origin: center center 25px;
+            display: inline-block;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateY(30px);
+            opacity: 0;
+        }
+
+        .change-text h3 .word .letter.in {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .change-text h3 .word .letter.out {
+            transform: translateY(-30px);
+            opacity: 0;
+        }
+
+        .home-content p {
+            color: #bdbdbd;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .info-box {
+            display: inline-flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 300px;
+            margin: 1rem 0 2rem;
+        }
+
+        .info-box h5 {
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .info-box span {
+            font-size: .9rem;
+            color: #bdbdbd;
+        }
+
+        .btn-box {
+            display: flex;
+            justify-content: space-between;
+            width: 320px;
+            height: 45px;
+        }
+
+        .btn-box a.btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 150px;
+            height: 100%;
+            background: var(--hover-color);
+            border: var(--hover-color) solid 3px;
+            color: var(--bg-color);
+            font-size: 1rem;
+            letter-spacing: 1px;
+            font-weight: 600;
+            transition: .6s;
+            box-shadow: var(--neon-box-shadow);
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        a.btn:hover {
+            color: var(--hover-color)
+        }
+
+        a.btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--bg-color);
+            width: 0%;
+            height: 100%;
+            z-index: -1;
+            transition: .4s;
+        }
+
+        a.btn:hover::before {
+            width: 100%;
+        }
+
+        a.btn:nth-child(2) {
+            background: var(--bg-color);
+            color: var(--hover-color);
+        }
+
+        a.btn:nth-child(2):hover {
+            color: var(--bg-color);
+        }
+
+        a.btn:nth-child(2)::before {
+            background: var(--hover-color);
+        }
+
+        .social-icons {
+            margin-top: 8rem;
+            display: flex;
+            justify-content: space-between;
+            width: 220px;
+            height: 40px;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            width: 50px;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            background: var(--bg-color);
+            color: var(--hover-color);
+            border: 2px solid var(--hover-color);
+            transition: .6s;
+            box-shadow: var(--neon-box-shadow);
+            border-radius: 5px;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .social-icons a i {
+            font-size: 1.5rem;
+        }
+
+        .social-icons a:hover {
+            color: var(--bg-color);
+        }
+
+        .social-icons a::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: var(--hover-color);
+            transition: .6s;
+            z-index: -1;
+        }
+
+        .social-icons a:hover::before {
+            width: 100%;
+        }
+
+        .home-image {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .img-box {
+            position: relative;
+            width: 480px;
+            height: 480px;
+            border-radius: 150%;
+            overflow: hidden;
+            border: 5px solid transparent;
+            box-shadow: 0 0 50px rgba(18, 247, 255, 0.5);
+            animation: neonGlow 2s infinite alternate;
+        }
+
+        @keyframes neonGlow {
+            0% {
+                box-shadow: 0 0 20px rgba(18, 247, 255, 0.5),
+                            0 0 20px rgba(18, 247, 255, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 30px rgba(18, 247, 255, 0.8),
+                            0 0 40px rgba(18, 247, 255, 0.5),
+                            0 0 60px rgba(18, 247, 255, 0.3);
+            }
+        }
+
+        .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* About Section */
+        .about {
+            background-color: rgba(26, 26, 46, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 10%;
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            margin: 50px 0;
+            border: 1px solid rgba(18, 247, 255, 0.1);
+            box-shadow: 0 0 30px rgba(18, 247, 255, 0.1);
+        }
+
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            gap: 50px;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-text h2 {
+            font-size: var(--h2-font);
+            margin-bottom: 15px;
+            color: var(--hover-color);
+        }
+
+        .about-text p {
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #e6e6e6;
+        }
+
+        .threejs-container {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(18, 247, 255, 0.2);
+        }
+
+        #threejs-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Contact Section */
+        .contact {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 10%;
+            border-radius: 20px;
+            margin: 50px 0;
+        }
+
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+            gap: 50px;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-info h2 {
+            font-size: var(--h2-font);
+            margin-bottom: 20px;
+            color: var(--hover-color);
+        }
+
+        .contact-info p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #e6e6e6;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--hover-color);
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .contact-text h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .contact-text a, .contact-text span {
+            color: #bdbdbd;
+            transition: color 0.3s ease;
+        }
+
+        .contact-text a:hover {
+            color: var(--hover-color);
+        }
+
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+            background-color:#292e33;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--hover-color);
+            box-shadow: 0 0 20px rgba(18, 247, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .contact-form:hover {
+            box-shadow: 0 0 30px rgba(18, 247, 255, 0.4);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            color: var(--hover-color);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            background: rgba(18, 247, 255, 0.05);
+            border: 1px solid rgba(18, 247, 255, 0.3);
+            border-radius: 5px;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(189, 189, 189, 0.7);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--hover-color);
+            box-shadow: 0 0 10px rgba(18, 247, 255, 0.3);
+            background: rgba(18, 247, 255, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40%;
+            height: 45px;
+            background: var(--hover-color);
+            border: var(--hover-color) solid 3px;
+            color: var(--bg-color);
+            font-size: 1rem;
+            letter-spacing: 1px;
+            font-weight: 600;
+            transition: .6s;
+            box-shadow: var(--neon-box-shadow);
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            color: var(--hover-color)
+        }
+
+        .submit-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--bg-color);
+            width: 0%;
+            height: 100%;
+            z-index: -1;
+            transition: .4s;
+        }
+
+        .submit-btn:hover::before {
+            width: 100%;
+        }
+
+        /* LeetCode Icon */
+        .fa-leetcode {
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        .fa-leetcode:before {
+            content: "LT";
+            color: var();
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(15, 15, 35, 0.8);
+            color: #bdbdbd;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 991px) {
+            header {
+                padding: 15px 5%;
+            }
+            section {
+                padding: 150px 5% 100px;
+            }
+            .home {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .home-content {
+                max-width: 100%;
+            }
+            .btn-box {
+                margin: 0 auto;
+            }
+            .social-icons {
+                margin: 4rem auto 0;
+            }
+            .img-box {
+                margin-top: 50px;
+                width: 280px;
+                height: 280px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #menu-icon {
+                display: block;
+            }
+            .navlist {
+                position: absolute;
+                top: 100%;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 100px);
+                background: rgba(37, 8, 33, 0.95);
+                flex-direction: column;
+                align-items: center;
+                padding: 50px 0;
+                transition: .5s ease;
+                backdrop-filter: blur(10px);
+            }
+            .navlist.active {
+                left: 0;
+            }
+            .navlist a {
+                display: block;
+                margin: 15px 0;
+                font-size: 1.2rem;
+            }
+            .info-box {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .btn-box {
+                flex-direction: column;
+                height: auto;
+                gap: 15px;
+                width: 100%;
+            }
+            .btn-box a.btn {
+                width: 100%;
+            }
+            .social-icons {
+                width: 100%;
+                justify-content: center;
+                gap: 15px;
+            }
+            .social-icons a {
+                width: 45px;
+                height: 45px;
+            }
+            .about-content, .contact-container {
+                flex-direction: column;
+            }
+            .contact-form {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Three.js Background -->
+    <div id="threejs-bg"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo"><span>M</span>ouli.</div>
+        <ul class="navlist">
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="Skills.html">Skills</a></li>
+            <li><a href="Projects.html">Projects</a></li>
+            <li><a href="Experiences.html">Experiences</a></li>
+            <li><a href="Certifications.html">Certifications</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div id="menu-icon" class="bx bx-menu"></div>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home" class="home">
+        <div class="home-content">
+            <h1>Hi! I'm Mouli Banerjee</h1>
+            <div class="change-text">
+                <h3>And I'm</h3>
+                <h3>
+                    <span class="word">Data&nbsp;Analyst</span>
+                    <span class="word">Programmer</span>
+                    <span class="word">Web&nbsp;Developer</span>
+                    <span class="word">Frontend&nbsp;Developer</span>
+                    <span class="word">Machine&nbsp;Learning&nbsp;Engineer</span>
+                    <span class="word">Graphic&nbsp;Designer</span>
+                </h3>
+            </div>
+            <p>As a B.Tech Computer Science Engineering student, I've built expertise in algorithms, software development, and emerging technologies. Passionate about AI, data analytics, and system programming. I aim to work with global tech leaders and create impactful, accessible technological solutions.</p>
+            
+            <div class="btn-box">
+                <a href="CV.html" class="btn">View Resume</a>
+                <a href="#contact" id="Hiring" class="btn">Hire Me Now!</a>
+            </div>
+
+            <div class="social-icons">
+                <a href="https://leetcode.com/u/Mouli_Banerjee/"><i class="fa-brands fa-leetcode"></i></a>
+                <a href="https://www.instagram.com/moul_ibanerjee/"><i class='bx bxl-instagram'></i></a>
+                <a href="https://x.com/MOULIBANERJEE36"><i class='bx bxl-twitter'></i></a>
+                <a href="https://www.linkedin.com/in/mouli-banerjee-712814283/"><i class='bx bxl-linkedin'></i></a>
+            </div>
+            
+        </div>
+
+        <div class="home-image">
+            <div class="img-box">
+               <img src="PhotoME.jpg" alt="Mouli Banerjee">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>About Me</h2>
+                <p>Hello, I'm Mouli Banerjee, a passionate and driven technologist with a deep interest in data analytics, software development, AI applications, and educational technology. From the very start of my academic journey, I've always believed in learning by doing — taking every opportunity to translate theoretical concepts into real-world, impactful solutions.</p>
+                <p>My professional experience includes a 1-year internship as a Data Analyst at Innova World under AICTE, where I honed my skills in data modeling, predictive analytics, and business intelligence reporting. During this tenure, I worked on real datasets, built performance dashboards, and supported decision-making processes through actionable insights.</p>
+                <p>As a problem-solver at heart, I've actively participated in various coding hackathons and national-level competitions, including GNA Hackathon 3.0, Build-a-Thon, and Code-a-Haunt, where I tackled real-time challenges and secured verified certifications for my problem-solving skills and innovative thinking.</p>
+            </div>
+            <div class="threejs-container">
+                <canvas id="threejs-canvas"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Get In Touch</h2>
+                <p>Feel free to reach out to me for any questions or opportunities. I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.</p>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="contact-text">
+                            <h3>Email</h3>
+                            <a href="mailto:banerjeemouli26@gmail.com">banerjeemouli26@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                        <div class="contact-text">
+                            <h3>Phone</h3>
+                            <a href="tel:+917602927810">+91 7602927810</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="contact-text">
+                            <h3>Location</h3>
+                            <span>Kolkata, India</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email address">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required placeholder="What's this about?">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="Type your message here..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; Mouli Banerjee | Creating smarter technology for a brighter tomorrow.</p>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuIcon = document.getElementById('menu-icon');
+        const navlist = document.querySelector('.navlist');
+
+        menuIcon.addEventListener('click', () => {
+            navlist.classList.toggle('active');
+            menuIcon.classList.toggle('bx-x');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.navlist a').forEach(link => {
+            link.addEventListener('click', () => {
+                navlist.classList.remove('active');
+                menuIcon.classList.remove('bx-x');
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 100);
+        });
+
+        // Text animation with letters appearing one by one
+        const words = document.querySelectorAll('.word');
+        let currentWordIndex = 0;
+        let animationInterval;
+
+        function initTextAnimation() {
+            // Split each word into letters
+            words.forEach(word => {
+                const text = word.textContent;
+                word.textContent = '';
+                text.split('').forEach(letter => {
+                    const span = document.createElement('span');
+                    span.className = 'letter';
+                    span.textContent = letter === ' ' ? '\u00A0' : letter;
+                    word.appendChild(span);
+                });
+            });
+            
+            // Set initial state
+            words.forEach((word, index) => {
+                word.style.opacity = index === 0 ? '1' : '0';
+                if (index === 0) {
+                    const letters = word.querySelectorAll('.letter');
+                    letters.forEach(letter => {
+                        letter.classList.add('in');
+                    });
+                }
+            });
+            
+            // Start animation
+            animateText();
+            animationInterval = setInterval(animateText, 3000);
+        }
+
+        function animateText() {
+            // Hide current word
+            const currentWord = words[currentWordIndex];
+            const currentLetters = currentWord.querySelectorAll('.letter');
+            
+            // Animate out current letters
+            currentLetters.forEach((letter, i) => {
+                setTimeout(() => {
+                    letter.classList.remove('in');
+                    letter.classList.add('out');
+                }, i * 50);
+            });
+            
+            // Move to next word
+            currentWordIndex = (currentWordIndex + 1) % words.length;
+            const nextWord = words[currentWordIndex];
+            
+            // Show next word
+            setTimeout(() => {
+                currentWord.style.opacity = '0';
+                nextWord.style.opacity = '1';
+                
+                // Reset next word's letters
+                const nextLetters = nextWord.querySelectorAll('.letter');
+                nextLetters.forEach(letter => {
+                    letter.classList.remove('in', 'out');
+                });
+                
+                // Animate in next letters
+                nextLetters.forEach((letter, i) => {
+                    setTimeout(() => {
+                        letter.classList.add('in');
+                    }, i * 50);
+                });
+            }, 1000);
+        }
+
+        // Start animation when page loads
+        window.addEventListener('load', () => {
+            initTextAnimation();
+        });
+
+        // Three.js Background Animation
+        const bgContainer = document.getElementById('threejs-bg');
+        
+        // Scene setup
+        const bgScene = new THREE.Scene();
+        
+        // Camera setup
+        const bgCamera = new THREE.PerspectiveCamera(
+            75, 
+            window.innerWidth / window.innerHeight, 
+            0.1, 
+            1000
+        );
+        bgCamera.position.z = 5;
+        
+        // Renderer setup
+        const bgRenderer = new THREE.WebGLRenderer({ 
+            alpha: true,
+            antialias: true 
+        });
+        bgRenderer.setSize(window.innerWidth, window.innerHeight);
+        bgRenderer.setPixelRatio(window.devicePixelRatio);
+        bgContainer.appendChild(bgRenderer.domElement);
+        
+        // Create particles for background
+        const bgParticlesGeometry = new THREE.BufferGeometry();
+        const bgParticleCount = 2000;
+        
+        const bgPosArray = new Float32Array(bgParticleCount * 3);
+        const bgColorArray = new Float32Array(bgParticleCount * 3);
+        
+        for(let i = 0; i < bgParticleCount * 3; i++) {
+            bgPosArray[i] = (Math.random() - 0.5) * 20;
+            bgColorArray[i] = Math.random() * 0.5 + 0.5; // Brighter colors
+        }
+        
+        bgParticlesGeometry.setAttribute(
+            'position',
+            new THREE.BufferAttribute(bgPosArray, 3)
+        );
+        
+        bgParticlesGeometry.setAttribute(
+            'color',
+            new THREE.BufferAttribute(bgColorArray, 3)
+        );
+        
+        const bgParticlesMaterial = new THREE.PointsMaterial({
+            size: 0.05,
+            vertexColors: true,
+            transparent: true,
+            opacity: 1,
+            blending: THREE.AdditiveBlending
+        });
+        
+        const bgParticleMesh = new THREE.Points(bgParticlesGeometry, bgParticlesMaterial);
+        bgScene.add(bgParticleMesh);
+        
+        // Create a wireframe sphere for background
+        const bgSphereGeometry = new THREE.SphereGeometry(1.5, 16, 16);
+        const bgSphereMaterial = new THREE.MeshBasicMaterial({ 
+            color: 0x12f7ff,
+            wireframe: true,
+            transparent: true,
+            opacity: 0,
+        });
+        const bgSphere = new THREE.Mesh(bgSphereGeometry, bgSphereMaterial);
+        bgScene.add(bgSphere);
+        
+        // Animation loop for background
+        function bgAnimate() {
+            requestAnimationFrame(bgAnimate);
+            
+            bgSphere.rotation.x += 0.001;
+            bgSphere.rotation.y += 0.001;
+            
+            bgParticleMesh.rotation.x += 0.0002;
+            bgParticleMesh.rotation.y += 0.0003;
+            
+            bgRenderer.render(bgScene, bgCamera);
+        }
+        
+        bgAnimate();
+        
+        // Handle window resize for background
+        window.addEventListener('resize', () => {
+            bgCamera.aspect = window.innerWidth / window.innerHeight;
+            bgCamera.updateProjectionMatrix();
+            bgRenderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Three.js Animation for About Section
+        const threejsContainer = document.querySelector('.threejs-container');
+        const canvas = document.getElementById('threejs-canvas');
+
+        // Scene setup
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x1a1a2e);
+        
+        // Camera setup
+        const camera = new THREE.PerspectiveCamera(
+            75, 
+            threejsContainer.clientWidth / threejsContainer.clientHeight, 
+            0.1, 
+            1000
+        );
+        camera.position.z = 5;
+        
+        // Renderer setup
+        const renderer = new THREE.WebGLRenderer({ 
+            canvas: canvas,
+            antialias: true 
+        });
+        renderer.setSize(threejsContainer.clientWidth, threejsContainer.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        
+        // Controls
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.enableZoom = false;
+        controls.enablePan = false;
+        
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0x404040);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0x12f7ff, 1);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+        
+        // Create a particle system
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particleCount = 1500;
+        
+        const posArray = new Float32Array(particleCount * 3);
+        const colorArray = new Float32Array(particleCount * 3);
+        
+        for(let i = 0; i < particleCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 10;
+            colorArray[i] = Math.random();
+        }
+        
+                particlesGeometry.setAttribute(
+            'position',
+            new THREE.BufferAttribute(posArray, 3)
+        );
+        
+        particlesGeometry.setAttribute(
+            'color',
+            new THREE.BufferAttribute(colorArray, 3)
+        );
+        
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.03,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending
+        });
+        
+        const particleMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particleMesh);
+        
+        // Create a wireframe torus
+        const torusGeometry = new THREE.TorusGeometry(1, 0.4, 16, 32);
+        const torusMaterial = new THREE.MeshBasicMaterial({ 
+            color: 0x12f7ff,
+            wireframe: true
+        });
+        const torus = new THREE.Mesh(torusGeometry, torusMaterial);
+        scene.add(torus);
+        
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            torus.rotation.x += 0.01;
+            torus.rotation.y += 0.01;
+            
+            particleMesh.rotation.x += 0.001;
+            particleMesh.rotation.y += 0.001;
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+        
+        // Handle window resize
+        function handleResize() {
+            camera.aspect = threejsContainer.clientWidth / threejsContainer.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(threejsContainer.clientWidth, threejsContainer.clientHeight);
+        }
+        
+        window.addEventListener('resize', handleResize);
+        
+        // Initial resize handling
+        handleResize();
+
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the data to a server
+            console.log({ name, email, subject, message });
+            
+            // Show success message
+            alert('Thank you for your message! I will get back to you soon.');
+            
+            // Reset form
+            contactForm.reset();
+        });
+
+        // CV Download button
+        document.getElementById('CV').addEventListener('click', (e) => {
+            e.preventDefault();
+            // Replace with actual CV download logic
+            alert('CV download would start here');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Prevent zooming on mobile devices
+        document.addEventListener('gesturestart', function (e) {
+            e.preventDefault();
+        });
+
+        // Touch event handling for better mobile interaction
+        document.addEventListener('touchstart', function() {}, true);
+
+        // Disable double-tap zoom on mobile
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Initialize text animation when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initTextAnimation();
+        });
+
+        // Mobile viewport height adjustment
+        function adjustViewportHeight() {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+
+        window.addEventListener('resize', adjustViewportHeight);
+        adjustViewportHeight();
+    </script>
+</body>
+</html>
